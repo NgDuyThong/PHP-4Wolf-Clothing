@@ -117,8 +117,7 @@ class RegisterController extends Controller
                 ],
                 'phone_number' => [
                     'required' => true,
-                    'minlength' => 10,
-                    'maxlength' => 11,
+                    'validPhone' => true
                 ],
             ];
     
@@ -154,8 +153,7 @@ class RegisterController extends Controller
                 ],
                 'phone_number' => [
                     'required' => __('message.required', ['attribute' => 'số điện thoại']),
-                    'minlength' => __('message.min', ['attribute' => 'số điện thoại', 'min' => 10]),
-                    'maxlength' => __('message.max', ['attribute' => 'số điện thoại', 'max' => 10]),
+                    'validPhone' => "Số điện thoại không hợp lệ"
                 ],
                 'city' => [
                     'required' =>  __('message.required', ['attribute' => 'tỉnh, thành phố']),

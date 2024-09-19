@@ -15,8 +15,9 @@
                 Thông Tin Cá Nhân
               </h4>
               <div class="step-description">
-                <div class="your-details">
-                  <form action="{{ route('profile.change_profile') }}" method="post">
+                <div class="your-details" data-rules="{{ json_encode($rules) }}"
+                          data-messages="{{ json_encode($messages) }}" id="form-data">
+                  <form action="{{ route('profile.change_profile') }}" method="post" id="form__js">
                     @csrf
                     <div class="form-group">
                       <label for="exampleInputPassword1">Họ Và Tên</label>
@@ -29,7 +30,7 @@
                     </div>
                     <div class="form-group">
                       <label for="exampleInputPassword1">Email</label>
-                      <input type="text" class="form-control" value="{{ $email }}" id="email" name="email" placeholder="Nhập địa chỉ email">
+                      <input type="text" class="form-control" value="{{ $email }}" id="email" disabled placeholder="Nhập địa chỉ email">
                       @if ($errors->get('email'))
                         <span id="email-error" class="error invalid-feedback" style="display: block">
                           {{ implode(", ",$errors->get('email')) }}
@@ -38,7 +39,7 @@
                     </div>
                     <div class="form-group">
                       <label for="exampleInputPassword1">Số điện thoại</label>
-                      <input type="text" class="form-control" value="{{ $phoneNumber }}" id="phone_number" name="phone_number" placeholder="Nhập số điện thoại">
+                      <input type="text" class="form-control" value="{{ $phoneNumber }}" id="phone_number" name="phone_number" placeholder="Nhập số điện thoại" data-inputmask='"mask": "999 999-9999"' data-mask>
                       @if ($errors->get('phone_number'))
                         <span id="phone_number-error" class="error invalid-feedback" style="display: block">
                           {{ implode(", ",$errors->get('phone_number')) }}

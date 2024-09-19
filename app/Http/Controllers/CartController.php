@@ -23,6 +23,9 @@ class CartController extends Controller
     }
     public function index()
     {
+        if (count($this->cartService->index()) == 0) {
+            return redirect()->route('user.home')->with('error', 'Có lỗi xảy ra vui lòng kiểm tra lại');
+        }
         return view('client.cart', $this->cartService->index());
     }
 

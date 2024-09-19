@@ -25,7 +25,7 @@ class UserController extends Controller
     {
         $this->userService = $userService;
     }
-    
+
     public function index()
     {
         return view('admin.user.index', $this->userService->index());
@@ -37,7 +37,7 @@ class UserController extends Controller
             return view('admin.user.create', $this->userService->create());
         }
 
-        return redirect()->route('admin.users_index');
+        return redirect()->route('admin.users_index')->with('error', 'Có lỗi xảy ra vui lòng kiểm tra lại');;
     }
 
     public function store(StoreUserRequest $request)
@@ -51,7 +51,7 @@ class UserController extends Controller
             return view('admin.user.edit',$this->userService->edit($user));
         }
 
-        return redirect()->route('admin.users_index');
+        return redirect()->route('admin.users_index')->with('error', 'Có lỗi xảy ra vui lòng kiểm tra lại');;
     }
 
     public function update(UpdateUserRequest $request, User $user)

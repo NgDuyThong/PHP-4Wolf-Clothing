@@ -37,7 +37,7 @@ class AdminController extends Controller
             return view('admin.staff.create', $this->adminService->create());
         }
 
-        return redirect()->route('admin.staffs_index');
+        return redirect()->route('admin.staffs_index')->with('error', 'Có lỗi xảy ra vui lòng kiểm tra lại');
     }
 
     public function store(StoreStaffRequest $request)
@@ -51,7 +51,7 @@ class AdminController extends Controller
             return view('admin.staff.edit',$this->adminService->edit($user));
         }
 
-        return redirect()->route('admin.staffs_index');
+        return redirect()->route('admin.staffs_index')->with('error', 'Có lỗi xảy ra vui lòng kiểm tra lại');
     }
 
     public function update(UpdateStaffRequest $request, User $user)

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
-class CartService 
+class CartService
 {
      /**
      * @var ProductSizeRepository
@@ -26,8 +26,11 @@ class CartService
     }
     public function index()
     {
-
-        return ['carts' => \Cart::getContent(), 'fee' => $this->getTransportFee()];
+        try {
+            return ['carts' => \Cart::getContent(), 'fee' => $this->getTransportFee()];
+        } catch (\Exception){
+            return [];
+        }
     }
 
     public function store(Request $request)
@@ -47,7 +50,7 @@ class CartService
                 return back()->with('error', TextSystemConst::ADD_CART_ERROR_QUANTITY);
             }
         }
-        
+
         //nếu người dùng thêm sản phẩm lớn hơn với số lượng kho thì báo lỗi
         if ($request->quantity > $product->products_size_quantity) {
             return back()->with('error', TextSystemConst::ADD_CART_ERROR_QUANTITY);
@@ -122,7 +125,7 @@ class CartService
             "to_district" => $toDistrict,
         ]);
         $serviceId = $response['data'][0]['service_id'];
-        
+
         //data get fee
         $dataGetFee = [
             "service_id" => $serviceId,

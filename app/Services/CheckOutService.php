@@ -14,9 +14,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Session;
 
-class CheckOutService 
+class CheckOutService
 {
     /**
      * @var OrderRepository
@@ -41,48 +40,54 @@ class CheckOutService
 
     public function index()
     {
-        $city = old('city') ?? Auth::user()->address->city;
-        $district = old('district') ?? Auth::user()->address->district;
-        $ward = old('ward') ?? Auth::user()->address->ward;
-        $apartment_number = old('apartment_number') ?? Auth::user()->address->apartment_number;
-        $phoneNumber = old('phone_number') ?? Auth::user()->phone_number;
-        $fullName = old('full_name') ?? Auth::user()->name;
-        $email = old('email') ?? Auth::user()->email;
+        try
+        {
+            $city = old('city') ?? Auth::user()->address->city;
+            $district = old('district') ?? Auth::user()->address->district;
+            $ward = old('ward') ?? Auth::user()->address->ward;
+            $apartment_number = old('apartment_number') ?? Auth::user()->address->apartment_number;
+            $phoneNumber = old('phone_number') ?? Auth::user()->phone_number;
+            $fullName = old('full_name') ?? Auth::user()->name;
+            $email = old('email') ?? Auth::user()->email;
 
-        $response = Http::withHeaders([
-            'token' => '24d5b95c-7cde-11ed-be76-3233f989b8f3'
-        ])->get('https://online-gateway.ghn.vn/shiip/public-api/master-data/province');
-        $citys = json_decode($response->body(), true);
+            $response = Http::withHeaders([
+                'token' => '24d5b95c-7cde-11ed-be76-3233f989b8f3'
+            ])->get('https://online-gateway.ghn.vn/shiip/public-api/master-data/province');
+            $citys = json_decode($response->body(), true);
 
-        $response = Http::withHeaders([
-            'token' => '24d5b95c-7cde-11ed-be76-3233f989b8f3'
-        ])->get('https://online-gateway.ghn.vn/shiip/public-api/master-data/district', [
-            'province_id' => $city,
-        ]);
-        $districts = json_decode($response->body(), true);
+            $response = Http::withHeaders([
+                'token' => '24d5b95c-7cde-11ed-be76-3233f989b8f3'
+            ])->get('https://online-gateway.ghn.vn/shiip/public-api/master-data/district', [
+                'province_id' => $city,
+            ]);
+            $districts = json_decode($response->body(), true);
 
-        $response = Http::withHeaders([
-            'token' => '24d5b95c-7cde-11ed-be76-3233f989b8f3'
-        ])->get('https://online-gateway.ghn.vn/shiip/public-api/master-data/ward', [
-            'district_id' => $district,
-        ]);
-        $wards = json_decode($response->body(), true);
+            $response = Http::withHeaders([
+                'token' => '24d5b95c-7cde-11ed-be76-3233f989b8f3'
+            ])->get('https://online-gateway.ghn.vn/shiip/public-api/master-data/ward', [
+                'district_id' => $district,
+            ]);
+            $wards = json_decode($response->body(), true);
 
-        $payments = Payment::where('status', Payment::STATUS['active'])-> get();
+            $payments = Payment::where('status', Payment::STATUS['active'])-> get();
 
-        return [
-            'citys' => $citys['data'],
-            'districts' => $districts['data'],
-            'wards' => $wards['data'],
-            'city' => $city,
-            'district' => $district,
-            'ward' => $ward,
-            'apartment_number' => $apartment_number,
-            'phoneNumber' => $phoneNumber,
-            'email' => $email,
-            'fullName' => $fullName,
-            'payments' => $payments,
-        ];
+            return [
+                'citys' => $citys['data'],
+                'districts' => $districts['data'],
+                'wards' => $wards['data'],
+                'city' => $city,
+                'district' => $district,
+                'ward' => $ward,
+                'apartment_number' => $apartment_number,
+                'phoneNumber' => $phoneNumber,
+                'email' => $email,
+                'fullName' => $fullName,
+                'payments' => $payments,
+            ];
+        } catch (Exception) {
+            return [];
+        }
+
     }
 
     public function store(CheckOutRequest $request)
@@ -143,7 +148,7 @@ class CheckOutService
         }
     }
 
-    public function paymentMomo() 
+    public function paymentMomo()
     {
         $orderId = time() . mt_rand(111, 999)."";
         $amount = \Cart::getTotal() + $this->getTransportFee()."";
@@ -174,7 +179,7 @@ class CheckOutService
             "to_district" => $toDistrict,
         ]);
         $serviceId = $response['data'][0]['service_id'];
-        
+
         //data get fee
         $dataGetFee = [
             "service_id" => $serviceId,
@@ -228,7 +233,7 @@ class CheckOutService
                 DB::commit();
                 // xóa sản tất cả sản phẩm trong giỏ hàng
                 \Cart::clear();
-                
+
                 //chuyển hướng người dùng đến trang lịch sử mua hàng
                 return redirect()->route('order_history.index');
             }
@@ -269,32 +274,32 @@ class CheckOutService
         $message = $request->message;
         $localMessage = $request->localMessage;
         $responseTime = $request->responseTime;
-        $errorCode = $request->errorCode;   
+        $errorCode = $request->errorCode;
         $payType = $request->payType;
         $extraData = $request->extraData;
         $secretKey = env('MOMO_SECRET_KEY');
         $extraData = "";
 
         $rawHash = "partnerCode=" . $partnerCode .
-            "&accessKey=" . $accessKey . 
-            "&requestId=" . $requestId . 
-            "&amount=" . $amount . 
-            "&orderId=" . $orderId . 
-            "&orderInfo=" . $orderInfo . 
+            "&accessKey=" . $accessKey .
+            "&requestId=" . $requestId .
+            "&amount=" . $amount .
+            "&orderId=" . $orderId .
+            "&orderInfo=" . $orderInfo .
             "&orderType=" . $orderType .
-            "&transId=" . $transId. 
+            "&transId=" . $transId.
             "&message=" . $message .
             "&localMessage=" . $localMessage.
             "&responseTime=" . $responseTime.
-            "&errorCode=" . $errorCode. 
-            "&payType=" . $payType. 
+            "&errorCode=" . $errorCode.
+            "&payType=" . $payType.
             "&extraData=" . $extraData;
         $signature = hash_hmac("sha256", $rawHash, $secretKey);
-        
+
         if (hash_equals($signature, $request->signature)) {
             return true;
         }
-        
+
         return false;
     }
 
@@ -346,7 +351,7 @@ class CheckOutService
 
         $vnp_Url = $vnp_Url . "?" . $query;
         if (isset($vnp_HashSecret)) {
-            $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret);//  
+            $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret);//
             $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
         }
         return redirect($vnp_Url);
@@ -363,15 +368,15 @@ class CheckOutService
         $extraData = "";
         $requestId = time().mt_rand(111, 999)."";
         $requestType = "captureWallet";
-        $rawHash = "accessKey=" . $accessKey . 
-            "&amount=" . $amount . 
-            "&extraData=" . $extraData . 
-            "&ipnUrl=" . $ipnUrl . 
-            "&orderId=" . $orderId . 
-            "&orderInfo=" . $orderInfo . 
-            "&partnerCode=" . $partnerCode . 
-            "&redirectUrl=" . $redirectUrl . 
-            "&requestId=" . $requestId . 
+        $rawHash = "accessKey=" . $accessKey .
+            "&amount=" . $amount .
+            "&extraData=" . $extraData .
+            "&ipnUrl=" . $ipnUrl .
+            "&orderId=" . $orderId .
+            "&orderInfo=" . $orderInfo .
+            "&partnerCode=" . $partnerCode .
+            "&redirectUrl=" . $redirectUrl .
+            "&requestId=" . $requestId .
             "&requestType=" . $requestType;
         $signature = hash_hmac("sha256", $rawHash, $serectkey);
         $data = array('partnerCode' => $partnerCode,
@@ -392,7 +397,7 @@ class CheckOutService
             'application/json'
         ])->post($endPoint, $data);
 
-        $jsonResult = json_decode($result->body(), true); 
+        $jsonResult = json_decode($result->body(), true);
         // chuyển hướng người dùng sang trang thanh toán của momo
         return redirect($jsonResult['payUrl']);
     }
@@ -412,15 +417,15 @@ class CheckOutService
 
     //     //tạo 1 cái chuỗi bao gồm những thôn tin thanh toán
     //     $rawHash = "partnerCode=" . $partnerCode .
-    //         "&accessKey=" . $accessKey . 
-    //         "&requestId=" . $requestId . 
-    //         "&amount=" . $amount . 
-    //         "&orderId=" . $orderId . 
-    //         "&orderInfo=" . $orderInfo . 
-    //         "&returnUrl=" . $returnUrl . 
-    //         "&notifyUrl=" . $notifyurl . 
+    //         "&accessKey=" . $accessKey .
+    //         "&requestId=" . $requestId .
+    //         "&amount=" . $amount .
+    //         "&orderId=" . $orderId .
+    //         "&orderInfo=" . $orderInfo .
+    //         "&returnUrl=" . $returnUrl .
+    //         "&notifyUrl=" . $notifyurl .
     //         "&extraData=" . $extraData;
-        
+
     //     // tạo 1 chữ ký mã hóa dữ liệu thanh toán gửi lên momo
     //     $signature = hash_hmac("sha256", $rawHash, $secretKey);
 
@@ -444,7 +449,7 @@ class CheckOutService
     //         'application/json'
     //     ])->post($endPoint, $data);
 
-    //     $jsonResult = json_decode($result->body(), true); 
+    //     $jsonResult = json_decode($result->body(), true);
     //     // chuyển hướng người dùng sang trang thanh toán của momo
     //     return redirect($jsonResult['payUrl']);
     // }

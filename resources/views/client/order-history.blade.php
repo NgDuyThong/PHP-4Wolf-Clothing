@@ -50,8 +50,10 @@
                     <td>
                       @if ($orderHistory->order_status == 0)
                           <span class="badge bg-warning">Chờ xử lý</span>
-                      @elseif($orderHistory->order_status == 1)
+                      @elseif($orderHistory->order_status == 4)
                           <span class="badge bg-info">Đang giao hàng</span>
+                      @elseif($orderHistory->order_status == 1)
+                          <span class="badge bg-info">Đã xác nhận</span>
                       @elseif($orderHistory->order_status == 2)
                           <span class="badge bg-danger">Đã hủy</span>
                       @elseif($orderHistory->order_status == 3)
@@ -64,7 +66,7 @@
                         <a class="btn-a" href="{{ route('order_history.show', $orderHistory->id) }}">Chi tiết</a>
                         @if ($orderHistory->order_status == 0)
                           <a class="btn-a" style="margin-left: 20px;" href="{{ route('order_history.update', $orderHistory->id) }}">Hủy Đơn</a>
-                        @elseif($orderHistory->order_status == 1)
+                        @elseif($orderHistory->order_status == 4)
                           <a class="btn-a" style="margin-left: 20px;" href="{{ route('order_history.update', $orderHistory->id) }}">Xác Nhận</a>
                         @elseif($orderHistory->order_status == 2)
                         <a class="btn-a" style="margin-left: 20px;" href="{{ route('order_history.update', $orderHistory->id) }}">Xóa Đơn</a>

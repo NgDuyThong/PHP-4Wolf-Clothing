@@ -129,7 +129,7 @@ class DashboardService
                             'class' => 'badge bg-warning'
                         ],
                         [
-                            'text' => 'Đang Giao Hàng',
+                            'text' => 'Đã xác nhận',
                             'value' => 1,
                             'class' => 'badge bg-info'
                         ],
@@ -142,6 +142,11 @@ class DashboardService
                             'text' => 'Đã Nhận Hàng',
                             'value' => 3,
                             'class' => 'badge bg-success'
+                        ],
+                        [
+                            'text' => 'Đang Giao Hàng',
+                            'value' => 4,
+                            'class' => 'badge bg-info'
                         ],
                     ],
                 ],

@@ -22,7 +22,7 @@ use Illuminate\Support\Str;
 use \Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 
-class AdminService 
+class AdminService
 {
     /**
      * @var UserRepository
@@ -144,7 +144,7 @@ class AdminService
                     'text' => $item['NameExtension'][1],
                 ];
             }
-    
+
             $response = Http::withHeaders([
                 'token' => '24d5b95c-7cde-11ed-be76-3233f989b8f3'
             ])->get('https://online-gateway.ghn.vn/shiip/public-api/master-data/district', [
@@ -157,7 +157,7 @@ class AdminService
                     'text' => $item['DistrictName'],
                 ];
             }
-    
+
             $response = Http::withHeaders([
                 'token' => '24d5b95c-7cde-11ed-be76-3233f989b8f3'
             ])->get('https://online-gateway.ghn.vn/shiip/public-api/master-data/ward', [
@@ -193,7 +193,7 @@ class AdminService
                     'attribute' => 'phone_number',
                     'label' => 'Số Điện Thoại',
                     'type' => 'text',
-                    'format_phone' => true,
+                    // 'format_phone' => true,
                 ],
                 [
                     'attribute' => 'role_id',
@@ -225,7 +225,7 @@ class AdminService
                     'type' => 'text',
                 ],
             ];
-    
+
             //Rules form
             $rules = [
                 'email' => [
@@ -260,14 +260,13 @@ class AdminService
                 ],
                 'phone_number' => [
                     'required' => true,
-                    'minlength' => 12,
-                    'maxlength' => 12,
+                    'validPhone' => true
                 ],
                 'role_id' => [
                     'required' => true,
                 ],
             ];
-    
+
             // Messages eror rules
             $messages = [
                 'name' => [
@@ -290,8 +289,7 @@ class AdminService
                 ],
                 'phone_number' => [
                     'required' => __('message.required', ['attribute' => 'số điện thoại']),
-                    'minlength' => __('message.min', ['attribute' => 'số điện thoại', 'min' => 10]),
-                    'maxlength' => __('message.max', ['attribute' => 'số điện thoại', 'max' => 10]),
+                    'validPhone' => "Số điện thoại không hợp lệ"
                 ],
                 'city' => [
                     'required' =>  __('message.required', ['attribute' => 'tỉnh, thành phố']),
@@ -309,7 +307,7 @@ class AdminService
                     'required' => __('message.required', ['attribute' => 'vai trò']),
                 ],
             ];
-    
+
             return [
                 'title' => TextLayoutTitle("create_staff"),
                 'fields' => $fields,
@@ -319,10 +317,10 @@ class AdminService
         } catch (Exception) {
             return [];
         }
-        
+
     }
 
-    /** 
+    /**
      * store the admin in the database.
      * @param App\Http\Requests\Admin\StoreStaffRequest $request
      * @return Illuminate\Http\RedirectResponse
@@ -340,7 +338,7 @@ class AdminService
                 'role_id' => $data['role_id'],
                 'created_by' => Auth::guard('admin')->user()->id,
             ];
-            
+
             // address data request
             $addressData = [
                 'city' => $data['city'],
@@ -380,7 +378,7 @@ class AdminService
      */
     public function edit(User $user)
     {
-        // try {
+         try {
             $response = Http::withHeaders([
                 'token' => '24d5b95c-7cde-11ed-be76-3233f989b8f3'
             ])->get('https://online-gateway.ghn.vn/shiip/public-api/master-data/province');
@@ -391,7 +389,7 @@ class AdminService
                     'text' => $item['NameExtension'][1],
                 ];
             }
-    
+
             $response = Http::withHeaders([
                 'token' => '24d5b95c-7cde-11ed-be76-3233f989b8f3'
             ])->get('https://online-gateway.ghn.vn/shiip/public-api/master-data/district', [
@@ -404,7 +402,7 @@ class AdminService
                     'text' => $item['DistrictName'],
                 ];
             }
-    
+
             $response = Http::withHeaders([
                 'token' => '24d5b95c-7cde-11ed-be76-3233f989b8f3'
             ])->get('https://online-gateway.ghn.vn/shiip/public-api/master-data/ward', [
@@ -442,7 +440,7 @@ class AdminService
                     'attribute' => 'phone_number',
                     'label' => 'Số Điện Thoại',
                     'type' => 'text',
-                    'format_phone' => true,
+                    // 'format_phone' => true,
                     'value' => $user->phone_number,
                 ],
                 [
@@ -493,7 +491,7 @@ class AdminService
                     'value' => $user->disable_reason,
                 ],
             ];
-    
+
             //Rules form
             $rules = [
                 'email' => [
@@ -527,8 +525,7 @@ class AdminService
                 ],
                 'phone_number' => [
                     'required' => true,
-                    'minlength' => 12,
-                    'maxlength' => 12,
+                    'validPhone' => true
                 ],
                 'role_id' => [
                     'required' => true,
@@ -537,7 +534,7 @@ class AdminService
                     'required' => true,
                 ],
             ];
-    
+
             // Messages eror rules
             $messages = [
                 'name' => [
@@ -560,8 +557,7 @@ class AdminService
                 ],
                 'phone_number' => [
                     'required' => __('message.required', ['attribute' => 'số điện thoại']),
-                    'minlength' => __('message.min', ['attribute' => 'số điện thoại', 'min' => 10]),
-                    'maxlength' => __('message.max', ['attribute' => 'số điện thoại', 'max' => 10]),
+                    'validPhone' => "Số điện thoại không hợp lệ"
                 ],
                 'city' => [
                     'required' =>  __('message.required', ['attribute' => 'tỉnh, thành phố']),
@@ -582,7 +578,7 @@ class AdminService
                     'required' => __('message.required', ['attribute' => 'trạng thái']),
                 ],
             ];
-    
+
             return [
                 'title' => TextLayoutTitle("edit_staff"),
                 'fields' => $fields,
@@ -590,10 +586,10 @@ class AdminService
                 'messages' => $messages,
                 'user' => $user,
             ];
-        // } catch (Exception) {
-        //     return [];
-        // }
-        
+         } catch (Exception) {
+             return [];
+         }
+
     }
 
     public function update(UpdateStaffRequest $request, User $user)
@@ -614,7 +610,7 @@ class AdminService
                 'active' => $data['active'],
                 'disable_reason' => $data['disable_reason'],
             ];
-            
+
             // address data request
             $addressData = [
                 'city' => $data['city'],
@@ -660,7 +656,7 @@ class AdminService
         }
     }
 
-     /** 
+     /**
      * delete the user in the database.
      * @param Illuminate\Http\Request; $request
      * @return \Illuminate\Http\JsonResponse
@@ -675,7 +671,7 @@ class AdminService
 
             if($this->userRepository->delete($user) && $this->adminRepository->delete($user->admin)) {
                 $this->userRepository->update(
-                    $user, 
+                    $user,
                     ['deleted_by' => Auth::guard('admin')->user()->id]
                 );
                 return response()->json(['status' => 'success', 'message' => TextSystemConst::DELETE_SUCCESS], 200);

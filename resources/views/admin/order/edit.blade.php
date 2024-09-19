@@ -109,7 +109,7 @@
             @endif
             <button class="btn btn-success" style="margin-left: 10px;" id="print-order">In Hóa Đơn</button>
           </div>
-         
+
         </div>
       </div>
     </div>
@@ -120,6 +120,7 @@
       <div class="form-group">
         <select class="form-control" name="order_status" id="order_status">
           <option value="1">Xác Nhận</option>
+          <option value="4">Vận chuyển</option>
           <option value="2">Hủy</option>
         </select>
       </div>

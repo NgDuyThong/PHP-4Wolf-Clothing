@@ -28,13 +28,16 @@ class CheckOutController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index() 
+    public function index()
     {
         // nếu giỏ hàng trống thì không cho vào trang thanh toán
         if (count(\Cart::getContent()) <= 0) {
             return back();
         }
         // trả về cho phía khách hàng
+        if (count($this->checkOutService->index()) == 0) {
+            return redirect()->route('user.home')->with('error', 'Có lỗi xảy ra vui lòng kiểm tra lại');
+        }
         return view('client.checkout', $this->checkOutService->index());
     }
 
@@ -49,7 +52,7 @@ class CheckOutController extends Controller
         if ($request->payment_method == Payment::METHOD['vnpay']) {
             return $this->checkOutService->paymentVNPAY();
         }
-        
+
         return $this->checkOutService->store($request);
     }
 

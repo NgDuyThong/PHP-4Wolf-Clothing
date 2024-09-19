@@ -239,8 +239,7 @@ class UserService
                 ],
                 'phone_number' => [
                     'required' => true,
-                    'minlength' => 12,
-                    'maxlength' => 12,
+                    'validPhone' => true
                 ],
             ];
     
@@ -266,8 +265,7 @@ class UserService
                 ],
                 'phone_number' => [
                     'required' => __('message.required', ['attribute' => 'số điện thoại']),
-                    'minlength' => __('message.min', ['attribute' => 'số điện thoại', 'min' => 10]),
-                    'maxlength' => __('message.max', ['attribute' => 'số điện thoại', 'max' => 10]),
+                    'validPhone' => "Số điện thoại không hợp lệ"
                 ],
                 'city' => [
                     'required' =>  __('message.required', ['attribute' => 'tỉnh, thành phố']),
@@ -413,7 +411,7 @@ class UserService
                     'attribute' => 'phone_number',
                     'label' => 'Số Điện Thoại',
                     'type' => 'text',
-                    'format_phone' => true,
+                    // 'format_phone' => true,
                     'value' => $user->phone_number,
                 ],
                 [
@@ -478,8 +476,7 @@ class UserService
                 ],
                 'phone_number' => [
                     'required' => true,
-                    'minlength' => 12,
-                    'maxlength' => 12,
+                    'validPhone' => true
                 ],
             ];
     
@@ -504,8 +501,7 @@ class UserService
                 ],
                 'phone_number' => [
                     'required' => __('message.required', ['attribute' => 'số điện thoại']),
-                    'minlength' => __('message.min', ['attribute' => 'số điện thoại', 'min' => 10]),
-                    'maxlength' => __('message.max', ['attribute' => 'số điện thoại', 'max' => 10]),
+                    'validPhone' => "Số điện thoại không hợp lệ"
                 ],
                 'city' => [
                     'required' =>  __('message.required', ['attribute' => 'tỉnh, thành phố']),

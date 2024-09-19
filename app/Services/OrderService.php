@@ -77,8 +77,13 @@ class OrderService
                             'class' => 'badge bg-warning'
                         ],
                         [
-                            'text' => 'Đang Giao Hàng',
+                            'text' => 'Đã xác nhận',
                             'value' => Order::STATUS_ORDER['transporting'],
+                            'class' => 'badge bg-info'
+                        ],
+                        [
+                            'text' => 'Đang Giao Hàng',
+                            'value' => 4,
                             'class' => 'badge bg-info'
                         ],
                         [
@@ -118,53 +123,58 @@ class OrderService
 
     public function edit(Order $order)
     {
-        $infoUserOfOrder = $this->orderRepository->getInfoUserOfOrder($order->id);
-        $infomationUser['id'] = $infoUserOfOrder->user_id;
-        $infomationUser['name'] = $infoUserOfOrder->user_name;
-        $infomationUser['email'] = $infoUserOfOrder->user_email;
-        $infomationUser['phone_number'] = $infoUserOfOrder->user_phone_number;
-        $infomationUser['apartment_number'] = $infoUserOfOrder->address_apartment_number;
-        $infomationUser['payment_name'] = $infoUserOfOrder->payment_name;
-        $infomationUser['orders_transport_fee'] = $infoUserOfOrder->orders_transport_fee;
-        $response = Http::withHeaders([
-            'token' => '24d5b95c-7cde-11ed-be76-3233f989b8f3'
-        ])->get('https://online-gateway.ghn.vn/shiip/public-api/master-data/province');
-        $data = json_decode($response->body(), true);
-        foreach ($data['data'] as $item) {
-            if ($infoUserOfOrder->address_city == $item['ProvinceID']) {
-                $infomationUser['city'] = $item['NameExtension'][1];
+        try {
+            $infoUserOfOrder = $this->orderRepository->getInfoUserOfOrder($order->id);
+            $infomationUser['id'] = $infoUserOfOrder->user_id;
+            $infomationUser['name'] = $infoUserOfOrder->user_name;
+            $infomationUser['email'] = $infoUserOfOrder->user_email;
+            $infomationUser['phone_number'] = $infoUserOfOrder->user_phone_number;
+            $infomationUser['apartment_number'] = $infoUserOfOrder->address_apartment_number;
+            $infomationUser['payment_name'] = $infoUserOfOrder->payment_name;
+            $infomationUser['orders_transport_fee'] = $infoUserOfOrder->orders_transport_fee;
+            $response = Http::withHeaders([
+                'token' => '24d5b95c-7cde-11ed-be76-3233f989b8f3'
+            ])->get('https://online-gateway.ghn.vn/shiip/public-api/master-data/province');
+            $data = json_decode($response->body(), true);
+            foreach ($data['data'] as $item) {
+                if ($infoUserOfOrder->address_city == $item['ProvinceID']) {
+                    $infomationUser['city'] = $item['NameExtension'][1];
+                }
             }
-        }
-        $response = Http::withHeaders([
-            'token' => '24d5b95c-7cde-11ed-be76-3233f989b8f3'
-        ])->get('https://online-gateway.ghn.vn/shiip/public-api/master-data/district', [
-            'province_id' => $infoUserOfOrder->address_city,
-        ]);
-        $data = json_decode($response->body(), true);
-        foreach ($data['data'] as $item) {
-            if ($infoUserOfOrder->address_district == $item['DistrictID']) {
-                $infomationUser['district'] = $item['DistrictName'];
+            $response = Http::withHeaders([
+                'token' => '24d5b95c-7cde-11ed-be76-3233f989b8f3'
+            ])->get('https://online-gateway.ghn.vn/shiip/public-api/master-data/district', [
+                'province_id' => $infoUserOfOrder->address_city,
+            ]);
+            $data = json_decode($response->body(), true);
+            foreach ($data['data'] as $item) {
+                if ($infoUserOfOrder->address_district == $item['DistrictID']) {
+                    $infomationUser['district'] = $item['DistrictName'];
+                }
             }
+
+            $response = Http::withHeaders([
+                'token' => '24d5b95c-7cde-11ed-be76-3233f989b8f3'
+            ])->get('https://online-gateway.ghn.vn/shiip/public-api/master-data/ward', [
+                'district_id' => $infoUserOfOrder->address_district,
+            ]);
+            $data = json_decode($response->body(), true);
+            foreach ($data['data'] as $item) {
+                if ($infoUserOfOrder->address_ward == $item['WardCode']) {
+                    $infomationUser['ward'] = $item['NameExtension'][0];
+                }
+            }
+
+            return [
+                'title' => TextLayoutTitle("order_detail"),
+                'order' => $order,
+                'infomation_user' => $infomationUser,
+                'order_details' => $this->orderRepository->getOrderDetail($order->id)
+            ];
+        } catch (Exception) {
+            return [];
         }
 
-        $response = Http::withHeaders([
-            'token' => '24d5b95c-7cde-11ed-be76-3233f989b8f3'
-        ])->get('https://online-gateway.ghn.vn/shiip/public-api/master-data/ward', [
-            'district_id' => $infoUserOfOrder->address_district,
-        ]);
-        $data = json_decode($response->body(), true);
-        foreach ($data['data'] as $item) {
-            if ($infoUserOfOrder->address_ward == $item['WardCode']) {
-                $infomationUser['ward'] = $item['NameExtension'][0];
-            }
-        }
-
-        return [
-            'title' => TextLayoutTitle("order_detail"),
-            'order' => $order,
-            'infomation_user' => $infomationUser,
-            'order_details' => $this->orderRepository->getOrderDetail($order->id)
-        ];
     }
 
     public function update(Order $order ,Request $request)

@@ -23,7 +23,7 @@ class OrderController extends Controller
     {
         $this->orderService = $orderService;
     }
-    
+
     public function index(Request $request)
     {
         return view('admin.order.index', $this->orderService->index($request));
@@ -31,6 +31,9 @@ class OrderController extends Controller
 
     public function edit(Order $order)
     {
+        if (count($this->orderService->edit($order)) == 0) {
+            return redirect()->route('admin.orders_index')->with('error', 'Có lỗi xảy ra vui lòng kiểm tra lại');
+        }
         return view('admin.order.edit', $this->orderService->edit($order));
     }
 

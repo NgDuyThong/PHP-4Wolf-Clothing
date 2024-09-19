@@ -38,6 +38,9 @@ $(document).ready(function(){
     $.validator.addMethod("checkspecialcharacter", function (value) {
         return value ? /[%#@_\-]/.test(value) : true;
     });
+    $.validator.addMethod("validPhone", function (value, element) {
+        return this.optional(element) || /^(\+84|0)[3|5|7|8|9][0-9]{8}$/.test(value);
+    }, "Số điện thoại không hợp lệ");
 
     $("#form__js").validate({
         rules: rules ?? "",

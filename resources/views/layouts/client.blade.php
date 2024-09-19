@@ -324,6 +324,7 @@
   <script src="{{ asset('asset/client/js/jquery.magnific-popup.js') }}"></script>
   <script src="{{ asset('asset/client/js/jquery.firstVisitPopup.js') }}"></script>
   <script src="{{ asset('asset/client/js/custom.js') }}"></script>
+  <script src="{{ asset('asset/admin/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
   <script src="{{ asset('asset/admin/plugins/jquery-validation/jquery.validate.js') }}"></script>
   
   @vite(['resources/admin/js/toast-message.js'])

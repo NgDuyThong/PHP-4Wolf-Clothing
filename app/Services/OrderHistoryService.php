@@ -10,7 +10,7 @@ use App\Repository\Eloquent\OrderRepository;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 
-class OrderHistoryService 
+class OrderHistoryService
 {
     /**
      * @var OrderRepository
@@ -61,7 +61,7 @@ class OrderHistoryService
                         $productSize->update(['quantity' => $productSize->quantity + $orderDetail->quantity]);
                     }
                     return back()->with('success', TextSystemConst::MESS_ORDER_HISTORY['cancel']);
-                case 1:
+                case 4:
                     // nếu trạng thái đang là đang giao hàng thì cập nhật thành đã nhận hàng
                     $this->orderRepository->update($order, ['order_status' => Order::STATUS_ORDER['received']]);
                     return back()->with('success', TextSystemConst::MESS_ORDER_HISTORY['confirm']);

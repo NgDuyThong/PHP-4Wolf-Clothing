@@ -36,7 +36,7 @@ class UpdateUserRequest extends FormRequest
                 'regex:/[0-9]/',
                 'regex:/[@$!%*#?&]/',
             ],
-            'phone_number' => 'required|min:11|max:12',
+            'phone_number' => 'required',
             'city' => 'required|integer',
             'district' => 'required|integer',
             'ward' => 'required|integer',

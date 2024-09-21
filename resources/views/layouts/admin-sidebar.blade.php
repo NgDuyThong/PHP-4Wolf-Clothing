@@ -175,10 +175,12 @@
           @php
             $isRouteUser = request()->is('admin/setting*')
           @endphp
+          @if ($isShow)
           <a class="nav-link {{ ($isRouteUser) ? $isRouteUser : 'collapsed' }}" href="{{ route('admin.setting_index') }}">
             <i class="bi bi-gear"></i>
             <span>Cài Đặt</span>
           </a>
+          @endif
         </li><!-- End Dashboard Nav -->
 
         <li class="nav-item">

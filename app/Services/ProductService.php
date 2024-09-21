@@ -162,9 +162,12 @@ class ProductService
                 ],
                 'price_import' => [
                     'required' => true,
+                    'number' => true
                 ],
                 'price_sell' => [
                     'required' => true,
+                    'greaterThanImportPrice' => true,
+                    'number' => true
                 ],
                 'branch' => [
                     'required' => true,
@@ -190,9 +193,12 @@ class ProductService
                 ],
                 'price_import' => [
                     'required' => __('message.required', ['attribute' => 'giá nhập sản phẩm']),
+                    'number' => 'Giá nhập phải là số'
                 ],
                 'price_sell' => [
                     'required' => __('message.required', ['attribute' => 'giá bán sản phẩm']),
+                    'greaterThanImportPrice' => 'Giá bán phải lớn hơn giá nhập',
+                    'number' => 'Giá bán phải là số'
                 ],
                 'branch' => [
                     'required' => __('message.required', ['attribute' => 'thương hiệu sản phẩm']),
@@ -248,9 +254,12 @@ class ProductService
             ],
             'price_import' => [
                 'required' => true,
+                'number' => true,
             ],
             'price_sell' => [
                 'required' => true,
+                'greaterThanImportPrice' => true,
+                'number' => true
             ],
             'branch' => [
                 'required' => true,
@@ -276,9 +285,12 @@ class ProductService
             ],
             'price_import' => [
                 'required' => __('message.required', ['attribute' => 'giá nhập sản phẩm']),
+                'number' => 'Giá nhập phải là số'
             ],
             'price_sell' => [
                 'required' => __('message.required', ['attribute' => 'giá bán sản phẩm']),
+                'greaterThanImportPrice' => 'Giá bán phải lớn hơn giá nhập',
+                'number' => 'Giá bán phải là số'
             ],
             'branch' => [
                 'required' => __('message.required', ['attribute' => 'thương hiệu sản phẩm']),

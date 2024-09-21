@@ -3,88 +3,15 @@ import Swal from 'sweetalert2';
 $(document).ready(function(){
   var table;
   var columnsExport = [];
+  var coloumnAction;
   // Count columns export
   Array.from($('#table-crud tr th')).forEach((child, index) => {
     columnsExport.push(index)
   });
   // Remove colomn action
-  columnsExport.pop();
+  coloumnAction = columnsExport.pop();
 
   toast = toast();
-  // var table = new simpleDatatables.DataTable("#table-crud", {
-  //   "paging": true,
-  //   "lengthChange": false,
-  //   "searching": true,
-  //   "ordering": false,
-  //   "info": true,
-  //   "autoWidth": false,
-  //   "responsive": true,
-  //   "buttons": [ 
-  //     {
-  //         extend: 'excelHtml5',
-  //         exportOptions: {
-  //           columns: columnsExport
-  //         }
-  //     },
-  //     {
-  //         extend: 'pdfHtml5',
-  //         exportOptions: {
-  //           columns: columnsExport
-  //         }
-          
-  //     },
-  //   ],
-  //   "language": {
-  //     search: "Tìm kiếm",
-  //     emptyTable: "Không có dữ liệu",
-  //     paginate: {
-  //         first: "Trang đầu",
-  //         previous: "Trang trước",
-  //         next: "Trang sau",
-  //         last: "Trang cuối",
-  //     },
-  //     "info": "Bản ghi từ _START_ đến _END_ tổng cộng _TOTAL_ bản ghi",
-  //     "infoFiltered": "",
-  //   }
-  // })
-
-
-  // table = $('#table-crud').DataTable({
-  //   "paging": true,
-  //   "lengthChange": false,
-  //   "searching": true,
-  //   "ordering": false,
-  //   "info": true,
-  //   "autoWidth": false,
-  //   "responsive": true,
-  //   "buttons": [ 
-  //     {
-  //         extend: 'excelHtml5',
-  //         exportOptions: {
-  //           columns: columnsExport
-  //         }
-  //     },
-  //     {
-  //         extend: 'pdfHtml5',
-  //         exportOptions: {
-  //           columns: columnsExport
-  //         }
-          
-  //     },
-  //   ],
-  //   "language": {
-  //     search: "Tìm kiếm",
-  //     emptyTable: "Không có dữ liệu",
-  //     paginate: {
-  //         first: "Trang đầu",
-  //         previous: "Trang trước",
-  //         next: "Trang sau",
-  //         last: "Trang cuối",
-  //     },
-  //     "info": "Bản ghi từ _START_ đến _END_ tổng cộng _TOTAL_ bản ghi",
-  //     "infoFiltered": "",
-  //   }
-  // });
   table = new DataTable('#table-crud', {
     layout: {
       topStart: 'buttons'
@@ -97,13 +24,6 @@ $(document).ready(function(){
             columns: columnsExport
         }
       }, 
-      // { 
-      //   extend: 'print', 
-      //   text: 'In', 
-      //   exportOptions: {
-      //       columns: columnsExport
-      //   }
-      // }, 
       { 
         extend: 'pdf', 
         text: 'Xuất PDF', 
@@ -115,7 +35,10 @@ $(document).ready(function(){
     paging: true,
     lengthChange: false,
     searching: true,
-    ordering: false,
+    ordering: true,
+    columnDefs: [
+            { "orderable": false, "targets": [coloumnAction] } // Vô hiệu hóa sắp xếp cho cột 2, 4 và 5
+    ],
     info: true,
     autoWidth: false,
     responsive: true,

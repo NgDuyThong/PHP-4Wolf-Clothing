@@ -15,8 +15,8 @@
                 Thông Tin Cá Nhân
               </h4>
               <div class="step-description">
-                <div class="your-details" data-rules="{{ json_encode($rules) }}"
-                          data-messages="{{ json_encode($messages) }}" id="form-data">
+                <div class="your-details" 
+                           id="form-data">
                   <form action="{{ route('profile.change_profile') }}" method="post" id="form__js">
                     @csrf
                     <div class="form-group">
@@ -30,7 +30,7 @@
                     </div>
                     <div class="form-group">
                       <label for="exampleInputPassword1">Email</label>
-                      <input type="text" class="form-control" value="{{ $email }}" id="email" disabled placeholder="Nhập địa chỉ email">
+                      <input type="text" class="form-control" value="{{ $email }}" id="email" name="email" readonly placeholder="Nhập địa chỉ email">
                       @if ($errors->get('email'))
                         <span id="email-error" class="error invalid-feedback" style="display: block">
                           {{ implode(", ",$errors->get('email')) }}

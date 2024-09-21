@@ -263,7 +263,7 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
                 DB::raw('SUM((od.quantity * od.unit_price) - (od.quantity * p.price_import)) as profit')
             )
             ->where('o.order_status', 3)
-            ->whereBetween('o.created_at', [$start, $end])
+            ->whereBetween(DB::raw('DATE(o.created_at)'), [$start, $end])
             ->groupBy('o.id','pm.name','o.created_at','o.transport_fee')
             ->get();
     }

@@ -18,6 +18,14 @@ $(document).ready(function(){
         return this.optional(element) || /^(\+84|0)[3|5|7|8|9][0-9]{8}$/.test(value);
     }, "Số điện thoại không hợp lệ");
 
+    $.validator.addMethod("greaterThanImportPrice", function(value, element) {
+        var price_import = parseFloat($('#price_import').val());
+        var price_sell = parseFloat(value);
+        
+        // Kiểm tra nếu giá bán lớn hơn giá nhập
+        return this.optional(element) || price_sell > price_import;
+    }, "Giá bán phải lớn hơn giá nhập.");
+
     $("#form__js").validate({
         rules: rules ?? "",
         messages: messages ?? "",

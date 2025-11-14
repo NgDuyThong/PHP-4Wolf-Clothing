@@ -91,11 +91,6 @@ php artisan serve
 
 Website sẽ chạy tại: `http://localhost:8000`
 
-## Tài khoản mặc định
-
-**Admin:**
-- Email: admin@gmail.com
-- Password: password
 
 ## Cấu trúc thư mục
 

@@ -134,7 +134,7 @@ function getWard()
 function getFee()
 {
     let shop_id = "3577591";
-    let from_district = "1493";
+    let from_district = "2027";
     let to_district = $('#district').val();
     $.ajax({
         type: 'GET',
@@ -145,12 +145,12 @@ function getFee()
             to_district: to_district
         }
     }).done((respones) => {
-        let from_district = "1493";
-        let service_type = respones.data[0].service_id;
+        let from_district = "2027";
+        let service_type = respones.data[0].service_type_id;
         let to_district_id = $('#district').val();
         let to_ward_code = $('#ward').val();
         let data = {
-            service_id: service_type,
+            service_type_id: service_type,
             insurance_value: 500000,
             coupon: null,
             from_district_id: from_district,

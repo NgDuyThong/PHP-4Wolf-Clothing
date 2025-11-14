@@ -51,7 +51,7 @@ Route::middleware(['maintenance'])->group(function () {
             //FE: Trang thanh toán
             Route::get('/', [CheckOutController::class, 'index'])->name('checkout.index');
             Route::post('/', [CheckOutController::class, 'store']);
-            Route::get('/callback-momo', [CheckOutController::class, 'callbackMomo'])->name('checkout.callback_momo');
+            Route::get('/callback-payos', [CheckOutController::class, 'callbackPayOS'])->name('checkout.callback_payos');
         });
     
         Route::group(['prefix' => 'profile'], function(){

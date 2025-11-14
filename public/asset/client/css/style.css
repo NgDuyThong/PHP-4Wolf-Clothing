@@ -148,7 +148,7 @@ hr {
     padding: 5px 15px;
 }
 .dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
-    background-color: #e40001;
+    background-color: #000000;
     color: #fff;
 }
 ul {
@@ -516,7 +516,7 @@ h6 {
     font-weight: 500;
 }
 .btn:hover, .btn:focus, .btn.focus {
-    background: #e40001 none repeat scroll 0 0;
+    background: #000000 none repeat scroll 0 0;
     color: #fff;
     text-decoration: none;
 }
@@ -623,8 +623,8 @@ i.right {
     color: #494b4c;
 }
 .nav>li>a:hover, .nav>li>a:focus {
-    background: transparent;
-    color: #e40001;
+    background: #000000;
+    color: #ffffff;
 }
 #product-tab .nav li {
     display: inline-block;
@@ -1151,11 +1151,11 @@ label.checkme {
     color: #000;
 }
 .nav .open>a, .nav .open>a:hover, .nav .open>a:focus {
-    background-color: #e40001;
+    background-color: #000000;
     color: #fff;
 }
 #menu>li>a::before {
-    background: #e40001 none repeat scroll 0 0;
+    background: #000000 none repeat scroll 0 0;
     bottom: 0;
     content: "";
     display: block;
@@ -2403,18 +2403,33 @@ a.thumbnail:hover, a.thumbnail:focus, a.thumbnail.active {
 ----------------------------------------------- */
 
 #scrollup::before {
-    background: #e40001 none repeat scroll 0 0;
+    background: #ffffff none repeat scroll 0 0;
     bottom: 20px;
-    color: #fff;
+    color: #000000;
     content: "\f106";
     font-family: fontawesome;
-    font-size: 25px;
-    height: 40px;
-    padding: 6px 12px;
+    font-size: 20px;
+    height: 50px;
+    width: 50px;
+    padding: 0;
     position: fixed;
     right: 20px;
-    width: 40px;
     z-index: 99;
+    border: 3px solid #000000;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+#scrollup:hover::before {
+    background: #000000;
+    color: #ffffff;
+    border-color: #000000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
 

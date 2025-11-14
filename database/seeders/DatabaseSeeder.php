@@ -234,15 +234,15 @@ class DatabaseSeeder extends Seeder
                     [
                         'id' => 1,
                         'logo' => 'logo.png',
-                        'name' => 'FlatShop',
-                        'email' => 'FlatShop@gmail.com',
+                        'name' => '4Wolf',
+                        'email' => '4Wolf@gmail.com',
                         'address' => '459 Tôn Đức Thắng, quận Liên Chiểu, thành phố Đà Nẵng',
                         'phone_number' => '123125934093',
                         'maintenance' => 2,
                         'notification' => '<b>WEBSITE tạm thời bảo trì để nâng cấp xin  quay lại sau</b>',
                         'introduction' => '
                             <h3 style="text-align: center; ">
-                            <b>GIỚI THIỆU VỀ TRUONG THUY SHOP</b>
+                            <b>GIỚI THIỆU VỀ 4Wolf</b>
                             </h3><h5><br></h5><h5><span style="font-family: " source="" sans="" pro";"="" times="" new="" roman"; "="">
                             Chào mừng đến với website bán thời trang của chúng tôi! 
                             Chúng tôi tự hào là một trong những cửa hàng trực tuyến hàng đầu về thời trang, 

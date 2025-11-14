@@ -117,7 +117,7 @@ class CartService
     public function getTransportFee()
     {
         //get service id
-        $fromDistrict = "1493";
+        $fromDistrict = "2027";
         $shopId = "3577591";
         $toDistrict = Auth::user()->address->district;
         $response = Http::withHeaders([
@@ -127,11 +127,11 @@ class CartService
             "from_district" => $fromDistrict,
             "to_district" => $toDistrict,
         ]);
-        $serviceId = $response['data'][0]['service_id'];
+        $serviceId = $response['data'][0]['service_type_id'];
 
         //data get fee
         $dataGetFee = [
-            "service_id" => $serviceId,
+            "service_type_id" => $serviceId,
             "insurance_value" => 500000,
             "coupon" => null,
             "from_district_id" => $fromDistrict,
@@ -142,10 +142,10 @@ class CartService
             "weight" => 1000,
             "width" => 15
         ];
+        
         $response = Http::withHeaders([
             'token' => '24d5b95c-7cde-11ed-be76-3233f989b8f3'
         ])->get('https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee', $dataGetFee);
-
         return $response['data']['total'];
     }
 }

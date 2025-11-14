@@ -40,7 +40,7 @@ class DashboardService
     {
         //tổng doanh thu
         $revenue = $this->orderRepository->getRevenue();
-        $revenue = $revenue[0]->total ?? $revenue ?? 0;
+        $revenue = $revenue[0]->total ?? 0;
         //tổng đơn hàng
         $orders = $this->orderRepository->getOrderTotal();
         //sản phẩm tồn kho

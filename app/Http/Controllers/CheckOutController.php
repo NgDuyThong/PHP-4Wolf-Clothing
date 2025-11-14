@@ -6,6 +6,7 @@ use App\Http\Requests\CheckOutRequest;
 use App\Models\Payment;
 use App\Services\CheckOutService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class CheckOutController extends Controller
@@ -53,21 +54,22 @@ class CheckOutController extends Controller
             'email' => $request->email,
             'phone' => $request->phone_number,
             'address' => $request->address,
+            'district' => $request->district,
+            'ward' => $request->ward,
         ]);
-        // nếu khách hàng chọn thanh toán online momo
-        if ($request->payment_method == Payment::METHOD['momo']) {
-            return $this->checkOutService->paymentMomo($request);
+        
+        // nếu khách hàng chọn thanh toán online PayOS
+        if ($request->payment_method == Payment::METHOD['payos']) {
+            return $this->checkOutService->paymentPayOS($request);
         }
-        // nếu khách hàng chọn thanh toán online vnpay
-        if ($request->payment_method == Payment::METHOD['vnpay']) {
-            return $this->checkOutService->paymentVNPAY($request);
-        }
+        
         return $this->checkOutService->store($request);
     }
 
-    public function callbackMomo(Request $request)
+    public function callbackPayOS(Request $request)
     {
-        return $this->checkOutService->callbackMomo($request);
+        Log::info('PayOS callback received', $request->all());
+        return $this->checkOutService->callbackPayOS($request);
     }
 
 }

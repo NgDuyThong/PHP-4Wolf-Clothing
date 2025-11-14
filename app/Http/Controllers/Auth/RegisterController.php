@@ -16,6 +16,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Log;
@@ -192,9 +193,10 @@ class RegisterController extends Controller
             $userData = [
                 'name' => $data['name'],
                 'email' => $data['email'],
-                'password' => $data['password'],
+                'password' => Hash::make($data['password']), // Hash password trực tiếp
                 'phone_number' => $data['phone_number'],
                 'role_id' => Role::ROLE['user'],
+                'active' => 1, // Tài khoản mặc định là active
             ];
             
             // lấy thông tin địa chỉ từ phía khách hàng để thêm vào vào csdl
@@ -212,7 +214,9 @@ class RegisterController extends Controller
 
             
             DB::beginTransaction();
-            // thêm tài khoản vào database
+            // Password đã được hash ở trên bằng Hash::make()
+            // Mutator sẽ kiểm tra: nếu password có độ dài 60 và bắt đầu bằng $2y$/$2a$/$2b$ 
+            // thì sẽ không hash lại, giữ nguyên password đã hash
             $user = $this->userRepository->create($userData);
 
             //thêm token vào database
@@ -223,20 +227,41 @@ class RegisterController extends Controller
                     'expires_at' => Carbon::now()->addMinutes($time),
                 ]
             );
-            // gửi mail cho người dùng khác thực tài khoản
-            $user->notify(new VerifyUserRegister($token));
+            
             //thêm địa của khách hàng vào trong csdl
             $addressData['user_id'] = $user->id;
             $this->addressRepository->updateOrCreate($addressData);
+            
+            // Tạm thời tự động verify email để test (không cần gửi email)
+            // TODO: Bỏ dòng này khi đã cấu hình email xong
+            $user->email_verified_at = Carbon::now();
+            $user->save();
+            
+            // Xóa token verify vì đã tự động verify
+            UserVerify::where('user_id', $user->id)->delete();
+            
             DB::commit();
-            // chuyển hướng người dùng đến trang thông báo xác thực tài khoản
-            return redirect()->route('user.verification.notice', $user->id);
+            
+            // Gửi mail cho người dùng xác thực tài khoản (tạm thời bỏ qua vì đã tự động verify)
+            // Uncomment dòng dưới khi đã cấu hình email xong
+            /*
+            try {
+                $user->notify(new VerifyUserRegister($token));
+            } catch (\Exception $emailException) {
+                Log::warning('Failed to send verification email to user: ' . $user->email);
+                Log::warning('Email error: ' . $emailException->getMessage());
+            }
+            */
+            
+            // Chuyển hướng trực tiếp đến trang chủ vì đã tự động verify
+            return redirect()->route('user.home')->with('success', 'Đăng ký thành công! Bạn có thể đăng nhập ngay.');
         } catch (Exception $e) {
             // khi có lỗi xảy ra thì xóa bỏ dữ thêm vào database trước đó
-            Log::error($e);
+            Log::error('Register Error: ' . $e->getMessage());
+            Log::error('Stack trace: ' . $e->getTraceAsString());
             DB::rollBack();
-            // hiển thị lỗi
-            return back()->with('error', TextSystemConst::CREATE_FAILED);
+            // hiển thị lỗi chi tiết hơn để debug
+            return back()->with('error', 'Đăng ký thất bại: ' . $e->getMessage())->withInput();
         }
     }
 

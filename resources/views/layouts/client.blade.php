@@ -26,6 +26,10 @@
   <link rel="stylesheet" type="text/css" href="{{ asset('asset/client/css/style.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('asset/client/css/magnific-popup.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('asset/client/css/owl.carousel.css') }}">
+  <!-- IVY Premium Theme - Phong cách thời trang cao cấp -->
+  <link rel="stylesheet" type="text/css" href="{{ asset('asset/client/css/ivy-premium-theme.css') }}">
+  <!-- Color Override - Remove all red/blue colors - MUST BE LAST -->
+  <link rel="stylesheet" type="text/css" href="{{ asset('asset/client/css/color-override.css') }}">
   <link rel="shortcut icon" href="{{ asset('asset/client/images/favicon.png') }}') }}">
   <link rel="apple-touch-icon" href="{{ asset('asset/client/images/apple-touch-icon.png') }}') }}">
   <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('asset/client/images/apple-touch-icon-72x72.png') }}') }}">
@@ -33,42 +37,15 @@
   @vite(['resources/client/css/home.css'])
 </head>
 <style>
-  .product-imageblock {
-    /* height: 280px !important; */
+  /* Custom inline styles */
+  .none-hover:hover {
+    color: inherit !important;
   }
-  .product-thumb__img-product{
-    height: 400px !important;
-    object-fit: cover !important;
-  }
-  .cart__shopping {
-    height: 40px;
-  }
-
-  .shopcart i:hover {
-    color: #fa5460 !important;
-    cursor: pointer;
-  }
-
-  .login, .register {
-    font-size: 15px;
-    font-weight: 500;
-    color: #fff !important;
-  }
-
-  .login:hover {
-    color: #fa5460 !important;
-    cursor: pointer;
-  }
-  .none-hover:hover{
-    color: unset;
-  }
-  .button_group{
-      display: flex;
-      justify-content: center;
-      padding-top: 10px; 
-  }
-  .invalid-feedback{
-    color: #fa5460;
+  
+  .invalid-feedback {
+    color: #ef4444 !important;
+    font-size: 14px !important;
+    margin-top: 4px !important;
   }
 </style>
 <body>
@@ -77,70 +54,52 @@
   <div class="wrapper">
     <!-- =====  HEADER START  ===== -->
     <header id="header">
-      <div class="header-top" style="background: #000;">
+      <div class="header">
         <div class="container">
-          <div class="row">
-            <div class="col-xs-12 col-sm-4">
-              <div class="header-top-left">
-                <div class="contact"><a>Call now !</a> <span class="hidden-xs hidden-sm hidden-md">0346792997</span></div>
+          <div class="row header-main-row">
+            <div class="navbar-header col-xs-6 col-sm-2"> 
+                <a class="navbar-brand none-hover" href="{{ route('user.home') }}"> 
+                  <img alt="Store Logo" src="{{ asset('asset/client/images/logo.png') }}"> 
+                </a> 
+              </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="main-search">
+                <form action="{{ route('user.search') }}" method="get">
+                  <input id="search-input" name="keyword" placeholder="Tìm kiếm sản phẩm..." class="form-control"
+                    autocomplete="off" type="text">
+                  <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                  </span>
+                </form>
               </div>
             </div>
-            <div class="col-xs-12 col-sm-8">
-              <ul class="header-top-right text-right">
+            <div class="col-xs-6 col-sm-4">
+              <div class="header-actions">
                 @if (!Auth::check())
-                  <li class="account">
-                    <a href="{{ route('user.login') }}" class="login">
-                      <i class="far fa-user"></i> Đăng Nhập
-                    </a>
-                  </li>
-                  <li class="account">
-                    <a href="{{ route('user.register') }}" class="login">
-                      <i class="fas fa-key"></i> Đăng Ký
-                    </a>
-                  </li>
+                  <a href="{{ route('user.login') }}" class="header-action-link">
+                    <i class="far fa-user"></i>
+                    <span>Đăng Nhập</span>
+                  </a>
+                  <a href="{{ route('user.register') }}" class="header-action-link">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Đăng Ký</span>
+                  </a>
                 @else
-                  <li class="language dropdown"> 
-                    <span class="dropdown-toggle login" id="dropdownMenu1" data-toggle="dropdown"
-                      aria-haspopup="true" aria-expanded="false" role="button"><i style="padding-right: 5px;" class="fas fa-user"></i>Thông Tin Cá Nhân 
-                      <span class="caret"></span>
-                    </span>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                  <div class="dropdown header-dropdown">
+                    <a href="#" class="header-action-link dropdown-toggle" id="accountDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-user"></i>
+                      <span>Tài Khoản</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdown">
                       <li><a href="{{ route('profile.index') }}">Thông tin cá nhân</a></li>
                       <li><a href="{{ route('order_history.index') }}">Lịch sử mua hàng</a></li>
                       <li><a href="{{ route('user.logout') }}">Đăng xuất</a></li>
                     </ul>
-                  </li>
-              @endif
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="header">
-        <div class="container">
-          <div class="row">
-            <div class="navbar-header col-xs-6 col-sm-4" style="text-align: unset;"> 
-                <a class="navbar-brand none-hover" href="{{ route('user.home') }}"> 
-                  {{-- <img alt="OYEENok"
-                    src="{{ asset('asset/client/images/logo.png') }}">  --}}
-                  <h2 style="font-weight: 600;">Truong Thuy Store</h2>
-                </a> 
-              </div>
-            <div class="col-xs-12 col-sm-4">
-              <div class="main-search mt_40">
-                <form action="{{ route('user.search') }}" method="get">
-                <input id="search-input" name="keyword" placeholder="Tìm kiếm" class="form-control input-lg"
-                  autocomplete="off" type="text">
-                <span class="input-group-btn">
-                  <button type="submit" class="btn btn-default btn-lg"><i class="fa fa-search"></i></button>
-                </span>
-              </form>
-              </div>
-            </div>
-            <div class="col-xs-6 col-sm-4 shopcart">
-              <div id="cart" class="btn-group btn-block mtb_40">                
-                <a style="float: right;padding-left: 30px;" href="{{ route('cart.index') }}">
-                  <i class="fas fa-shopping-cart" style="font-size: 25px; color: #fff;"></i>
+                  </div>
+                @endif
+                <a href="{{ route('cart.index') }}" class="header-action-link" title="Giỏ hàng">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span>Giỏ Hàng</span>
                 </a>
               </div>
             </div>
@@ -270,11 +229,11 @@
           <div class="col-md-3 footer-block">
             <h6 class="footer-title ptb_20">Liên Hệ</h6>
             <ul>
-              <li>Cơ sở 1 317 Lý Thường Kiệt, Phù Lý, Hà Nam</li>
-              <li>Cơ sở 2 Nga Bắp, Liêm Thuận, Thanh Liêm, Hà Nam</li>
-              <li>0346792997
+              <li>Cơ sở 1 160STORE Tô Hiến Thành - Quận 10</li>
+              <li>Cơ sở 2 160STORE Khuông Việt - Tân Phú</li>
+              <li>0782485283
               </li>
-              <li>honglanh3122002@gmail.com</li>
+              <li>ngduythong1412@gmail.com</li>
             </ul>
           </div>
         </div>
@@ -285,7 +244,7 @@
             <div class="col-sm-4">
               <div class="social_icon">
                 <ul>
-                  <li><a href="https://www.facebook.com/profile.php?id=100026087362147&mibextid=LQQJ4d"><i class="fa fa-facebook"></i></a></li>
+                  <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                   <li><a href="#"><i class="fa fa-google"></i></a></li>
                   <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
                   <li><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -312,7 +271,7 @@
     </div>
     <!-- =====  FOOTER END  ===== -->
   </div>
-  <a id="scrollup"></a>
+  <a id="scrollup"><i class="fa fa-chevron-up"></i></a>
   @if (Session::has('success'))
     <span id="toast__js" message="{{ session('success') }}" type="success"></span>
   @elseif (Session::has('error'))
@@ -328,6 +287,104 @@
   <script src="{{ asset('asset/admin/plugins/jquery-validation/jquery.validate.js') }}"></script>
   
   @vite(['resources/admin/js/toast-message.js'])
+  
+  <script>
+    // Force black/white color scheme - NO RED EVER
+    document.addEventListener('DOMContentLoaded', function() {
+      
+      // Function to apply correct colors
+      function applyCorrectColors() {
+        // Get all menu items
+        const menuItems = document.querySelectorAll('#menu.navbar-nav > li > a, .navbar-nav > li > a, .nav > li > a');
+        
+        menuItems.forEach(item => {
+          // Remove any inline styles with red
+          const style = item.getAttribute('style');
+          if (style) {
+            const cleanStyle = style
+              .replace(/background(-color)?:\s*#e40001[^;]*/gi, '')
+              .replace(/background(-color)?:\s*red[^;]*/gi, '')
+              .replace(/background(-color)?:\s*#fa5460[^;]*/gi, '')
+              .replace(/color:\s*#e40001[^;]*/gi, '')
+              .replace(/color:\s*red[^;]*/gi, '')
+              .replace(/color:\s*#fa5460[^;]*/gi, '');
+            item.setAttribute('style', cleanStyle);
+          }
+          
+          // Force correct default colors
+          item.style.setProperty('color', '#000000', 'important');
+          item.style.setProperty('background-color', 'transparent', 'important');
+          item.style.setProperty('background', 'transparent', 'important');
+          
+          // Add hover event listeners
+          item.addEventListener('mouseenter', function() {
+            this.style.setProperty('color', '#ffffff', 'important');
+            this.style.setProperty('background-color', '#000000', 'important');
+            this.style.setProperty('background', '#000000', 'important');
+            this.style.setProperty('border-bottom-color', '#000000', 'important');
+          });
+          
+          item.addEventListener('mouseleave', function() {
+            // Immediately set to default colors - NO DELAY
+            const isActive = this.parentElement.classList.contains('active');
+            
+            if (!isActive) {
+              // Force immediate color change
+              this.style.cssText = 'color: #000000 !important; background-color: transparent !important; background: transparent !important; border-bottom-color: transparent !important; transition: none !important;';
+            } else {
+              // Keep active state
+              this.style.cssText = 'color: #ffffff !important; background-color: #000000 !important; background: #000000 !important; border-bottom-color: #000000 !important; transition: none !important;';
+            }
+          });
+        });
+        
+        // Set active menu item
+        const activeItems = document.querySelectorAll('#menu.navbar-nav > li.active > a, .navbar-nav > li.active > a');
+        activeItems.forEach(item => {
+          item.style.setProperty('color', '#ffffff', 'important');
+          item.style.setProperty('background-color', '#000000', 'important');
+          item.style.setProperty('background', '#000000', 'important');
+          item.style.setProperty('border-bottom-color', '#000000', 'important');
+        });
+      }
+      
+      // Apply colors immediately
+      applyCorrectColors();
+      
+      // Re-apply after a short delay to catch any dynamic content
+      setTimeout(applyCorrectColors, 100);
+      setTimeout(applyCorrectColors, 500);
+      
+      // Watch for any style changes and fix them
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+            const el = mutation.target;
+            if (el.matches('#menu.navbar-nav > li > a, .navbar-nav > li > a, .nav > li > a')) {
+              const style = el.getAttribute('style');
+              if (style && (style.includes('#e40001') || style.includes('red') || style.includes('#fa5460'))) {
+                // Remove red colors immediately
+                const cleanStyle = style
+                  .replace(/background(-color)?:\s*#e40001[^;]*/gi, 'background-color: #000000')
+                  .replace(/background(-color)?:\s*red[^;]*/gi, 'background-color: #000000')
+                  .replace(/background(-color)?:\s*#fa5460[^;]*/gi, 'background-color: #000000')
+                  .replace(/color:\s*#e40001[^;]*/gi, 'color: #ffffff')
+                  .replace(/color:\s*red[^;]*/gi, 'color: #ffffff')
+                  .replace(/color:\s*#fa5460[^;]*/gi, 'color: #ffffff');
+                el.setAttribute('style', cleanStyle);
+              }
+            }
+          }
+        });
+      });
+      
+      observer.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['style', 'class'],
+        subtree: true
+      });
+    });
+  </script>
 </body>
 
 </html>

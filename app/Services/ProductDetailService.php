@@ -90,7 +90,7 @@ class ProductDetailService
             $totalRating += $rating->rating * $rating->sum;
             $totalNumberReview += $rating->sum;
         }
-        $avgRating = count($ratingsByProduct) > 0 ? $totalRating / $totalNumberReview : 5;
+        $avgRating = count($ratingsByProduct) > 0 ? $totalRating / $totalNumberReview : 0;
 
         //check if the user is allowed to rate the product
         $checkReviewProduct = false;

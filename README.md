@@ -1,66 +1,123 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 4Wolf Store - Website Bán Thời Trang
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Website thương mại điện tử chuyên bán quần áo thời trang được xây dựng bằng Laravel.
 
-## About Laravel
+## Giới thiệu
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+4Wolf Store là một nền tảng thương mại điện tử hiện đại, cung cấp các sản phẩm thời trang chất lượng cao cho nam và nữ. Website được thiết kế với giao diện thân thiện, dễ sử dụng và tích hợp đầy đủ các tính năng cần thiết cho một cửa hàng trực tuyến.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tính năng chính
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Khách hàng
+- 🛍️ Xem và tìm kiếm sản phẩm
+- 🛒 Giỏ hàng và thanh toán
+- 👤 Đăng ký/Đăng nhập tài khoản
+- 📦 Theo dõi đơn hàng
+- 💳 Thanh toán qua Momo và COD
+- ⭐ Đánh giá sản phẩm
 
-## Learning Laravel
+### Quản trị viên
+- 📊 Dashboard thống kê
+- 📦 Quản lý sản phẩm
+- 👥 Quản lý người dùng
+- 🛍️ Quản lý đơn hàng
+- 🏷️ Quản lý danh mục
+- 🎨 Quản lý thương hiệu
+- ⚙️ Cài đặt website
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Công nghệ sử dụng
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **Framework**: Laravel 9.x
+- **Database**: MySQL
+- **Frontend**: Bootstrap, jQuery, Owl Carousel
+- **Payment**: Momo API
+- **Email**: SMTP
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Yêu cầu hệ thống
 
-## Laravel Sponsors
+- PHP >= 8.0
+- Composer
+- MySQL >= 5.7
+- Node.js & NPM
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Cài đặt
 
-### Premium Partners
+1. Clone repository
+```bash
+git clone https://github.com/NgDuyThong/PHP-4Wolf-Clothing.git
+cd PHP-4Wolf-Clothing
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+2. Cài đặt dependencies
+```bash
+composer install
+npm install
+```
 
-## Contributing
+3. Tạo file .env
+```bash
+cp .env.example .env
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+4. Generate application key
+```bash
+php artisan key:generate
+```
 
-## Code of Conduct
+5. Cấu hình database trong file .env
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database_name
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+6. Chạy migration và seeder
+```bash
+php artisan migrate --seed
+```
 
-## Security Vulnerabilities
+7. Build assets
+```bash
+npm run dev
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+8. Khởi động server
+```bash
+php artisan serve
+```
+
+Website sẽ chạy tại: `http://localhost:8000`
+
+## Tài khoản mặc định
+
+**Admin:**
+- Email: admin@gmail.com
+- Password: password
+
+## Cấu trúc thư mục
+
+```
+├── app/                    # Application logic
+├── database/              # Migrations & Seeders
+├── public/                # Public assets
+│   └── asset/
+│       ├── admin/        # Admin assets
+│       └── client/       # Client assets
+├── resources/
+│   └── views/
+│       ├── admin/        # Admin views
+│       └── client/       # Client views
+└── routes/               # Route definitions
+```
+
+## Tác giả
+
+**Nguyễn Duy Thông**
+- GitHub: [@NgDuyThong](https://github.com/NgDuyThong)
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Dự án này được phát hành dưới [MIT License](https://opensource.org/licenses/MIT).

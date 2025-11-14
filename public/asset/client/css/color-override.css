@@ -1,0 +1,372 @@
+/* ===== COLOR OVERRIDE - REMOVE ALL RED/BLUE COLORS ===== */
+/* This file must be loaded LAST to override all previous styles */
+
+/* === FORCE BLACK/WHITE COLOR SCHEME === */
+
+/* Override ALL navigation links */
+.navbar-nav > li > a,
+#menu.navbar-nav > li > a,
+.nav > li > a,
+.nav-tabs > li > a,
+ul.nav > li > a {
+    color: #000000 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* Override ALL navigation hover states */
+.navbar-nav > li > a:hover,
+.navbar-nav > li > a:focus,
+.navbar-nav > li > a:active,
+#menu.navbar-nav > li > a:hover,
+#menu.navbar-nav > li > a:focus,
+#menu.navbar-nav > li > a:active,
+.nav > li > a:hover,
+.nav > li > a:focus,
+.nav > li > a:active,
+.nav-tabs > li > a:hover,
+ul.nav > li > a:hover {
+    color: #ffffff !important;
+    background: #000000 !important;
+    background-color: #000000 !important;
+}
+
+/* Override active states */
+.navbar-nav > li.active > a,
+#menu.navbar-nav > li.active > a,
+.nav > li.active > a {
+    color: #ffffff !important;
+    background: #000000 !important;
+    background-color: #000000 !important;
+}
+
+/* Override dropdown menu */
+.dropdown-menu > li > a {
+    color: #212121 !important;
+    background: #ffffff !important;
+}
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+    color: #ffffff !important;
+    background: #000000 !important;
+    background-color: #000000 !important;
+}
+
+/* Override open navigation */
+.nav .open > a,
+.nav .open > a:hover,
+.nav .open > a:focus {
+    color: #ffffff !important;
+    background: #000000 !important;
+    background-color: #000000 !important;
+}
+
+/* Override mega menu */
+.mega-dropdown-menu .dropdown-header {
+    background: #000000 !important;
+    color: #ffffff !important;
+}
+
+/* Override breadcrumb */
+.breadcrumb li a:hover {
+    color: #000000 !important;
+}
+
+/* Override footer links */
+.footer-block a:hover {
+    color: #ffffff !important;
+}
+
+/* Override search button */
+.main-search .btn-lg:hover i,
+.main-search button:hover i {
+    color: #000000 !important;
+}
+
+/* Override product buttons */
+.product-thumb .button-group .wishlist:hover,
+.product-thumb .button-group .quickview:hover,
+.product-thumb .button-group .compare:hover,
+.product-thumb .button-group .add-to-cart:hover {
+    background-color: #000000 !important;
+}
+
+/* Override owl carousel */
+.owl-nav > div:hover {
+    border-color: #000000 !important;
+}
+
+/* Override pagination */
+.pagination-nav ul li a:hover {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+}
+
+/* Override feature hover */
+.feature-i-left:hover h6 {
+    color: #000000 !important;
+}
+
+/* Override blog */
+#Blog .post-info h6 a {
+    color: #000000 !important;
+}
+
+/* Override blockquote */
+blockquote {
+    border-color: #000000 !important;
+}
+
+/* Override date time */
+.date-time {
+    color: #000000 !important;
+    background-color: #ffffff !important;
+}
+
+/* Override banner text */
+.bannertext > p {
+    color: #000000 !important;
+}
+
+/* Override input amount */
+input#amount {
+    color: #000000 !important;
+}
+
+/* Override client designation */
+.client-designation {
+    color: #000000 !important;
+}
+
+/* Override star rating */
+.fa.fa-star.fa-stack-1x {
+    color: #d4af37 !important;
+}
+
+/* Override UI states */
+.ui-state-active,
+.ui-state-active a,
+.ui-state-active a:link,
+.ui-state-active a:visited {
+    background: #000000 !important;
+    color: #ffffff !important;
+}
+
+.ui-state-focus a:link,
+.ui-state-focus a:visited {
+    color: #000000 !important;
+}
+
+.ui-widget-header {
+    background: #000000 !important;
+    color: #ffffff !important;
+}
+
+.ui-widget-header a {
+    color: #ffffff !important;
+}
+
+/* Remove any inline red/blue styles */
+[style*="#e40001"],
+[style*="#fa5460"],
+[style*="red"],
+[style*="#3b82f6"],
+[style*="#4f46e5"],
+[style*="blue"] {
+    color: #000000 !important;
+    background-color: transparent !important;
+}
+
+/* Fast transition to prevent color flashing */
+.navbar-nav > li > a,
+#menu.navbar-nav > li > a,
+.nav > li > a,
+.dropdown-menu > li > a {
+    transition: all 0.1s ease !important;
+}
+
+/* === NUCLEAR OPTION - OVERRIDE EVERYTHING === */
+
+/* Disable ALL transitions to prevent red color flash */
+body .navbar-nav > li > a,
+body #menu.navbar-nav > li > a,
+body .nav > li > a,
+html body .navbar-nav > li > a,
+html body #menu.navbar-nav > li > a,
+.navbar-nav > li > a,
+#menu.navbar-nav > li > a,
+.nav > li > a {
+    transition: none !important;
+    -webkit-transition: none !important;
+    -moz-transition: none !important;
+    -o-transition: none !important;
+}
+
+/* Force override with highest specificity - DEFAULT STATE */
+body .navbar-nav > li > a,
+body #menu.navbar-nav > li > a,
+body .nav > li > a,
+html body .navbar-nav > li > a,
+html body #menu.navbar-nav > li > a,
+.navbar-nav > li > a,
+#menu.navbar-nav > li > a,
+.nav > li > a {
+    color: #000000 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border-bottom-color: transparent !important;
+}
+
+/* Force override hover with highest specificity - HOVER STATE */
+body .navbar-nav > li > a:hover,
+body .navbar-nav > li > a:focus,
+body #menu.navbar-nav > li > a:hover,
+body #menu.navbar-nav > li > a:focus,
+html body .navbar-nav > li > a:hover,
+html body #menu.navbar-nav > li > a:hover,
+.navbar-nav > li > a:hover,
+.navbar-nav > li > a:focus,
+#menu.navbar-nav > li > a:hover,
+#menu.navbar-nav > li > a:focus,
+.nav > li > a:hover,
+.nav > li > a:focus {
+    color: #ffffff !important;
+    background: #000000 !important;
+    background-color: #000000 !important;
+    border-bottom-color: #000000 !important;
+}
+
+/* Force override active state - ACTIVE STATE */
+body .navbar-nav > li.active > a,
+body #menu.navbar-nav > li.active > a,
+html body .navbar-nav > li.active > a,
+html body #menu.navbar-nav > li.active > a,
+.navbar-nav > li.active > a,
+#menu.navbar-nav > li.active > a,
+.nav > li.active > a {
+    color: #ffffff !important;
+    background: #000000 !important;
+    background-color: #000000 !important;
+    border-bottom-color: #000000 !important;
+}
+
+/* Override any element with red background - IMMEDIATE */
+[style*="background: #e40001"],
+[style*="background:#e40001"],
+[style*="background-color: #e40001"],
+[style*="background-color:#e40001"],
+[style*="background: red"],
+[style*="background-color: red"],
+*[style*="#e40001"],
+*[style*="red"] {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    transition: none !important;
+}
+
+/* Override any element with red/blue text - IMMEDIATE */
+[style*="color: #e40001"],
+[style*="color:#e40001"],
+[style*="color: red"],
+[style*="color: #fa5460"],
+[style*="color:#fa5460"],
+[style*="color: #3b82f6"],
+[style*="color:#3b82f6"],
+[style*="color: blue"] {
+    color: #000000 !important;
+    transition: none !important;
+}
+
+/* Force override for menu items specifically */
+.navbar-nav > li > a[style*="#e40001"],
+#menu.navbar-nav > li > a[style*="#e40001"],
+.nav > li > a[style*="#e40001"],
+.navbar-nav > li > a[style*="red"],
+#menu.navbar-nav > li > a[style*="red"],
+.nav > li > a[style*="red"] {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    transition: none !important;
+}
+
+/* === PREVENT RED COLOR IN ALL STATES === */
+
+/* Override during animation/transition */
+@keyframes no-red {
+    0%, 100% {
+        background-color: transparent !important;
+        color: #000000 !important;
+    }
+}
+
+/* Apply to all menu items */
+.navbar-nav > li > a,
+#menu.navbar-nav > li > a,
+.nav > li > a {
+    animation: no-red 0s !important;
+}
+
+/* Force immediate color on state change */
+.navbar-nav > li > a:not(:hover):not(.active),
+#menu.navbar-nav > li > a:not(:hover):not(.active),
+.nav > li > a:not(:hover):not(.active) {
+    color: #000000 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* Disable all animations that might show red */
+* {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+}
+
+/* === FIX SCROLL TO TOP BUTTON === */
+#scrollup {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border: 3px solid #000000 !important;
+    border-radius: 0 !important;
+    width: 50px !important;
+    height: 50px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+    transition: all 0.3s ease !important;
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    z-index: 999 !important;
+    font-size: 20px !important;
+}
+
+#scrollup::before {
+    content: none !important;
+    display: none !important;
+}
+
+#scrollup:hover {
+    background: #000000 !important;
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border-color: #000000 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* === FIX SOCIAL ICONS - REMOVE CIRCLE === */
+.social_icon li,
+.social-icon ul li a {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 0 8px !important;
+}
+
+/* === END OF COLOR OVERRIDE === */

@@ -3,9 +3,11 @@
 namespace App\Http\Requests\Auth;
 
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Validation\ValidationException;
@@ -60,30 +62,48 @@ class UserLoginRequest extends FormRequest
         $this->ensureIsNotRateLimited();
         $email = $this->email;
         $password = $this->password;
-        $user = [
-            'email' => $email, 
-            'password' => $password, 
-            'role_id' => Role::ROLE['user'],
-            'deleted_at' => null,
-            'email_verified_at' => function ($query) {
-                $query->where('email_verified_at', '!=', null);
-            }
-        ];
         
-        if (! Auth::guard()->attempt($user, $this->boolean('remember'))) {
+        // Tìm user với email và role_id phù hợp, chưa bị xóa
+        $user = User::where('email', $email)
+            ->where('role_id', Role::ROLE['user'])
+            ->whereNull('deleted_at')
+            ->first();
+        
+        // Nếu không tìm thấy user
+        if (!$user) {
             RateLimiter::hit($this->throttleKey());
-
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
             ]);
-        } elseif (Auth::guard()->attempt($user, $this->boolean('remember')) &&  Auth::guard()->user()->active == 0) {
+        }
+        
+        // Kiểm tra email đã được verify chưa
+        if (!$user->email_verified_at) {
             RateLimiter::hit($this->throttleKey());
-            $disableReason = Auth::guard('admin')->user()->disable_reason;
-            Auth::guard()->logout();
+            throw ValidationException::withMessages([
+                'email' => 'Tài khoản chưa được xác thực email. Vui lòng kiểm tra email và xác thực tài khoản trước khi đăng nhập.',
+            ]);
+        }
+        
+        // Kiểm tra password
+        if (!Hash::check($password, $user->password)) {
+            RateLimiter::hit($this->throttleKey());
+            throw ValidationException::withMessages([
+                'email' => trans('auth.failed'),
+            ]);
+        }
+        
+        // Kiểm tra nếu tài khoản bị vô hiệu hóa
+        if ($user->active == 0) {
+            RateLimiter::hit($this->throttleKey());
+            $disableReason = $user->disable_reason ?? '';
             throw ValidationException::withMessages([
                 'disable_reason' => trans('auth.locked') . $disableReason,
             ]);
         }
+        
+        // Đăng nhập thành công
+        Auth::guard()->login($user, $this->boolean('remember'));
         RateLimiter::clear($this->throttleKey());
     }
 

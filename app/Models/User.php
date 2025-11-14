@@ -79,11 +79,31 @@ class User extends Authenticatable
 
     /**
      * Hash the password before inserting database.
+     * Chỉ hash nếu password chưa được hash (không bắt đầu bằng $2y$, $2a$, $2b$)
      *
      * @var string $value
      */
     public function setPasswordAttribute($value)
     {
-        $this->attributes['password'] = Hash::make($value);
+        // Nếu password rỗng, giữ nguyên
+        if (empty($value)) {
+            $this->attributes['password'] = $value;
+            return;
+        }
+        
+        // Kiểm tra xem password đã được hash chưa
+        // Bcrypt hash có độ dài 60 ký tự và bắt đầu bằng $2y$, $2a$, hoặc $2b$
+        $isHashed = strlen($value) === 60 && (
+            substr($value, 0, 4) === '$2y$' || 
+            substr($value, 0, 4) === '$2a$' || 
+            substr($value, 0, 4) === '$2b$'
+        );
+        
+        // Chỉ hash nếu password chưa được hash
+        if (!$isHashed) {
+            $this->attributes['password'] = Hash::make($value);
+        } else {
+            $this->attributes['password'] = $value;
+        }
     }
 }

@@ -37,7 +37,6 @@ class Payment extends Model
 
     const METHOD = [
         'offline' => 1,
-        'momo' => 2,
-        'vnpay' => 3,
+        'payos' => 2,
     ];
 }

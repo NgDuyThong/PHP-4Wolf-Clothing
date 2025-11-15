@@ -97,7 +97,10 @@
                 </div>
                 <div class="button-group mt_30">
                   <div class="text-center">
-                    <button class="btn btn-primary">Thêm Vào Giỏ Hàng</button>
+                    <button class="btn btn-primary" style="margin-right: 10px;">Thêm Vào Giỏ Hàng</button>
+                    <button type="button" class="btn btn-wishlist" onclick="addToWishlist({{ $product->id }})" style="background: #fff; color: #000; border: 2px solid #000; padding: 10px 20px; font-weight: 600;">
+                      <i class="fa fa-heart-o"></i> Yêu Thích
+                    </button>
                   </div>
                 </div>
               </div>
@@ -244,4 +247,35 @@
     </div>
   </div>
 @vite(['resources/client/js/product-detail.js', 'resources/client/css/product-review.css'])
+
+<script>
+function addToWishlist(productId) {
+    // Kiểm tra đăng nhập
+    @guest
+        alert('Vui lòng đăng nhập để thêm sản phẩm vào danh sách yêu thích!');
+        window.location.href = '{{ route("user.login") }}';
+        return;
+    @endguest
+    
+    // Lấy wishlist từ localStorage
+    let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    
+    // Kiểm tra sản phẩm đã có trong wishlist chưa
+    if (wishlist.includes(productId)) {
+        alert('Sản phẩm đã có trong danh sách yêu thích!');
+        return;
+    }
+    
+    // Thêm vào wishlist
+    wishlist.push(productId);
+    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+    
+    // Đổi icon và text
+    event.target.innerHTML = '<i class="fa fa-heart"></i> Đã thêm';
+    event.target.style.background = '#000';
+    event.target.style.color = '#fff';
+    
+    alert('Đã thêm sản phẩm vào danh sách yêu thích!');
+}
+</script>
 @endsection

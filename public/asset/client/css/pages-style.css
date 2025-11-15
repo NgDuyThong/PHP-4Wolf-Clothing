@@ -1,0 +1,365 @@
+/* ===== PAGES STYLE - 4WOLF STORE ===== */
+
+/* Page Header */
+.page-header {
+    background: linear-gradient(135deg, #000000 0%, #2c2c2c 100%);
+    padding: 60px 0 40px;
+    margin-bottom: 50px;
+    position: relative;
+    overflow: hidden;
+}
+
+.page-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="none"/><path d="M0 0L100 100M100 0L0 100" stroke="rgba(255,255,255,0.03)" stroke-width="1"/></svg>');
+    opacity: 0.5;
+}
+
+.page-header h1 {
+    color: #ffffff;
+    font-size: 42px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.page-header .breadcrumb {
+    background: transparent;
+    padding: 10px 0 0;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.page-header .breadcrumb a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.page-header .breadcrumb a:hover {
+    color: #ffffff;
+}
+
+.page-header .breadcrumb-item.active {
+    color: #ffffff;
+}
+
+/* Content Sections */
+.page-content {
+    padding: 0 0 60px;
+}
+
+.content-section {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 40px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.content-section:hover {
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+.content-section h4 {
+    color: #000000;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #000000;
+    position: relative;
+}
+
+.content-section h4::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 60px;
+    height: 2px;
+    background: #ffffff;
+}
+
+.content-section p {
+    color: #555555;
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+.content-section ul,
+.content-section ol {
+    color: #555555;
+    line-height: 1.8;
+    padding-left: 20px;
+}
+
+.content-section ul li,
+.content-section ol li {
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.content-section ul li::marker {
+    color: #000000;
+}
+
+.content-section strong {
+    color: #000000;
+    font-weight: 600;
+}
+
+/* Contact Page Specific */
+.contact-info-box {
+    background: #f8f8f8;
+    border-radius: 8px;
+    padding: 30px;
+    margin-bottom: 30px;
+    border-left: 4px solid #000000;
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 25px;
+    padding: 15px;
+    background: #ffffff;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+    transform: translateX(5px);
+}
+
+.contact-item i {
+    font-size: 24px;
+    color: #000000;
+    margin-right: 15px;
+    min-width: 30px;
+    text-align: center;
+}
+
+.contact-item-content {
+    flex: 1;
+}
+
+.contact-item-content strong {
+    display: block;
+    color: #000000;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.contact-item-content span {
+    color: #666666;
+    line-height: 1.6;
+}
+
+/* Contact Form */
+.contact-form-wrapper {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 40px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+}
+
+.contact-form-wrapper h4 {
+    color: #000000;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+.form-group label {
+    color: #333333;
+    font-weight: 500;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.form-group label span {
+    color: #ff0000;
+}
+
+.form-control {
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 12px 15px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #000000;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+    outline: none;
+}
+
+.btn-submit {
+    background: #000000;
+    color: #ffffff;
+    border: none;
+    padding: 12px 40px;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #333333;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Map Section */
+.map-wrapper {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 40px;
+}
+
+.map-wrapper iframe {
+    display: block;
+    width: 100%;
+}
+
+/* Social Icons */
+.social-connect {
+    margin-top: 30px;
+}
+
+.social-connect h4 {
+    color: #000000;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.social-connect .social_icon ul {
+    padding: 0;
+    margin: 0;
+}
+
+.social-connect .social_icon li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.social-connect .social_icon li a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    background: #000000;
+    color: #ffffff;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.social-connect .social_icon li a:hover {
+    background: #333333;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.social-connect .social_icon li a i {
+    font-size: 18px;
+}
+
+/* Shipping Info Icons */
+.shipping-step {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background: #f8f8f8;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.shipping-step:hover {
+    background: #000000;
+    color: #ffffff;
+}
+
+.shipping-step .step-number {
+    width: 40px;
+    height: 40px;
+    background: #000000;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.shipping-step:hover .step-number {
+    background: #ffffff;
+    color: #000000;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .page-header h1 {
+        font-size: 32px;
+    }
+    
+    .content-section {
+        padding: 25px 20px;
+    }
+    
+    .contact-form-wrapper {
+        padding: 25px 20px;
+    }
+    
+    .contact-info-box {
+        padding: 20px;
+    }
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.content-section {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.content-section:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.content-section:nth-child(3) {
+    animation-delay: 0.2s;
+}

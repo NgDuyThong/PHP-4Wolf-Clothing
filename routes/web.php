@@ -25,6 +25,34 @@ Route::middleware(['maintenance'])->group(function () {
     Route::get('/', [HomeController::class, "index"])->name('user.home');
     //FE: Trang giới thiệu 
     Route::get('introduction', [HomeController::class, "introduction"])->name('user.introduction');
+    //FE: Trang thông tin giao hàng
+    Route::get('shipping-info', [App\Http\Controllers\PageController::class, "shippingInfo"])->name('user.shipping_info');
+    //FE: Trang chính sách bảo mật
+    Route::get('privacy-policy', [App\Http\Controllers\PageController::class, "privacyPolicy"])->name('user.privacy_policy');
+    //FE: Trang điều khoản & điều kiện
+    Route::get('terms-conditions', [App\Http\Controllers\PageController::class, "termsConditions"])->name('user.terms_conditions');
+    //FE: Trang liên hệ
+    Route::get('contact', [App\Http\Controllers\PageController::class, "contact"])->name('user.contact');
+    //FE: Trang bản đồ cửa hàng
+    Route::get('store-locations', [App\Http\Controllers\PageController::class, "storeLocations"])->name('user.store_locations');
+    //FE: Trang danh sách yêu thích
+    Route::get('wishlist', [App\Http\Controllers\WishlistController::class, "index"])->name('user.wishlist');
+    //API: Lấy sản phẩm ngẫu nhiên cho gợi ý (phải đặt trước api/products)
+    Route::get('api/products/random', function(\Illuminate\Http\Request $request) {
+        $limit = $request->input('limit', 4);
+        $products = \App\Models\Product::inRandomOrder()->limit($limit)->get(['id', 'name', 'price_sell as price', 'img as image']);
+        return response()->json($products);
+    });
+    //API: Lấy thông tin sản phẩm cho wishlist
+    Route::get('api/products', function(\Illuminate\Http\Request $request) {
+        $ids = explode(',', $request->input('ids', ''));
+        $ids = array_filter($ids); // Remove empty values
+        if (empty($ids)) {
+            return response()->json([]);
+        }
+        $products = \App\Models\Product::whereIn('id', $ids)->get(['id', 'name', 'price_sell as price', 'img as image']);
+        return response()->json($products);
+    });
     //FE: Trang chi tiết sản phẩm
     Route::get('product-detail/{product}', [ProductDetailController::class, "show"])->name('user.products_detail');
     //FE: Trang hiển thị sản phẩm tìm kiếm

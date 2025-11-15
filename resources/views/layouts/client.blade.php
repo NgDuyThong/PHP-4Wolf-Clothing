@@ -97,6 +97,10 @@
                     </ul>
                   </div>
                 @endif
+                <a href="{{ route('user.wishlist') }}" class="header-action-link" title="Yêu thích" id="wishlist-header-link">
+                  <i class="fa fa-heart"></i>
+                  <span>Yêu Thích (<span id="wishlist-header-count">0</span>)</span>
+                </a>
                 <a href="{{ route('cart.index') }}" class="header-action-link" title="Giỏ hàng">
                   <i class="fas fa-shopping-cart"></i>
                   <span>Giỏ Hàng</span>
@@ -202,19 +206,19 @@
           <div class="col-md-3 footer-block">
             <h6 class="footer-title ptb_20">Về Chúng Tôi</h6>
             <ul>
-              <li><a href="#">Thông tin giao hàng</a></li>
-              <li><a href="#">Chính sách bảo mật</a></li>
-              <li><a href="#">Điều khoản & Điều kiện</a></li>
-              <li><a href="#">Liên hệ với chúng tôi</a></li>
+              <li><a href="{{ route('user.shipping_info') }}">Thông tin giao hàng</a></li>
+              <li><a href="{{ route('user.privacy_policy') }}">Chính sách bảo mật</a></li>
+              <li><a href="{{ route('user.terms_conditions') }}">Điều khoản & Điều kiện</a></li>
+              <li><a href="{{ route('user.contact') }}">Liên hệ với chúng tôi</a></li>
             </ul>
           </div>
           <div class="col-md-3 footer-block">
             <h6 class="footer-title ptb_20">Dịch Vụ</h6>
             <ul>
-              <li><a href="#">Bản đồ</a></li>
-              <li><a href="#">Danh sách yêu thích</a></li>
-              <li><a href="#">Tài khoản của tôi</a></li>
-              <li><a href="#">Lịch sử đặt hàng</a></li>
+              <li><a href="{{ route('user.store_locations') }}">Bản đồ</a></li>
+              <li><a href="{{ route('user.wishlist') }}">Danh sách yêu thích</a></li>
+              <li><a href="{{ route('profile.index') }}">Tài khoản của tôi</a></li>
+              <li><a href="{{ route('order_history.index') }}">Lịch sử đặt hàng</a></li>
             </ul>
           </div>
           <div class="col-md-3 footer-block">
@@ -383,6 +387,25 @@
         attributeFilter: ['style', 'class'],
         subtree: true
       });
+    });
+    
+    // Update wishlist count in header
+    function updateWishlistCount() {
+      const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+      const countElement = document.getElementById('wishlist-header-count');
+      if (countElement) {
+        countElement.textContent = wishlist.length;
+      }
+    }
+    
+    // Update on page load
+    document.addEventListener('DOMContentLoaded', updateWishlistCount);
+    
+    // Update when localStorage changes (from other tabs)
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'wishlist') {
+        updateWishlistCount();
+      }
     });
   </script>
 </body>

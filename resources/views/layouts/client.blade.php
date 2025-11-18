@@ -47,6 +47,48 @@
     font-size: 14px !important;
     margin-top: 4px !important;
   }
+  
+  /* Header actions - Fix text wrapping */
+  .header-action-link {
+    display: inline-flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    padding: 5px 8px !important;
+  }
+  
+  .header-action-link span {
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+    margin-top: 3px !important;
+    white-space: nowrap !important;
+  }
+  
+  .header-action-link i {
+    font-size: 20px !important;
+    margin-bottom: 2px !important;
+  }
+  
+  .header-actions {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 5px !important;
+  }
+  
+  .header-dropdown {
+    display: inline-flex !important;
+  }
+  
+  @media (max-width: 768px) {
+    .header-action-link span {
+      font-size: 10px !important;
+    }
+    .header-action-link i {
+      font-size: 18px !important;
+    }
+  }
 </style>
 <body>
   <!-- =====  LODER  ===== -->

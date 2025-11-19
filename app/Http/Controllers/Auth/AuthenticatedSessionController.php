@@ -28,7 +28,21 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(UserLoginRequest $request)
     {
+        // Thực hiện xác thực thông tin đăng nhập
         $request->authenticate();
+
+        // Kiểm tra trạng thái xác thực email
+        $user = Auth::user();
+
+        if (!$user || !$user->hasVerifiedEmail()) {
+            // Nếu chưa xác thực email thì đăng xuất và báo lỗi
+            Auth::guard('web')->logout();
+
+            return redirect()->route('user.login')
+                ->with('error', 'Tài khoản của bạn chưa được xác thực email. Vui lòng kiểm tra hộp thư và xác nhận trước khi đăng nhập.');
+        }
+
+        // Đăng nhập thành công và đã xác thực email
         $request->session()->regenerate();
         return redirect()->route('user.home');
     }

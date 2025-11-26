@@ -103,6 +103,12 @@ Route::middleware(['maintenance'])->group(function () {
         //FE: Trang đăng nhập
         Route::get('login', [AuthenticatedSessionController::class, "create"])->name('user.login');
         Route::post('login', [AuthenticatedSessionController::class, "store"]);
+
+        //Google OAuth
+        Route::get('auth/google', [App\Http\Controllers\Auth\GoogleAuthController::class, 'redirectToGoogle'])->name('auth.google');
+        Route::get('auth/google/callback', [App\Http\Controllers\Auth\GoogleAuthController::class, 'handleGoogleCallback']);
+        Route::get('auth/google/complete', [App\Http\Controllers\Auth\GoogleAuthController::class, 'showCompleteForm'])->name('auth.google.complete');
+        Route::post('auth/google/complete', [App\Http\Controllers\Auth\GoogleAuthController::class, 'completeRegistration']);
     
         //FE: Trang đăng ký
         Route::get('register', [RegisterController::class, "create"])->name('user.register');

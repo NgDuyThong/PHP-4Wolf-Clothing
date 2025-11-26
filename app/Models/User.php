@@ -23,6 +23,7 @@ class User extends Authenticatable
         'name', 
         'email', 
         'password', 
+        'google_id',
         'role_id',
         'phone_number',
         'email_verified_at',
@@ -85,7 +86,7 @@ class User extends Authenticatable
      */
     public function setPasswordAttribute($value)
     {
-        // Nếu password rỗng, giữ nguyên
+        // Nếu password rỗng hoặc null, giữ nguyên (cho trường hợp đăng nhập Google)
         if (empty($value)) {
             $this->attributes['password'] = $value;
             return;

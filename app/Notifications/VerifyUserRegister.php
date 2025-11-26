@@ -39,8 +39,7 @@ class VerifyUserRegister extends Notification
     public function toMail($notifiable)
     {
         $verifyUrl = env('APP_URL')
-            . '/account/verify/'
-            . $notifiable->getKey()
+            . '/account/verify'
             . '?token=' . $this->token;
         return (new MailMessage)
                     ->subject('[4Wolf] XÁC NHẬN TÀI KHOẢN')

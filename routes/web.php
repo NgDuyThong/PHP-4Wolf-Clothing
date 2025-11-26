@@ -117,7 +117,7 @@ Route::middleware(['maintenance'])->group(function () {
         //FE: Trang xác thực tài khoản
         Route::get('verify-email/{user}', [RegisterController::class, "verifyEmail"])
             ->name('user.verification.notice');
-        Route::get('account/verify/{id}', [VerifyEmailController::class, 'verifyAccount'])
+        Route::get('account/verify', [VerifyEmailController::class, 'verifyAccount'])
             ->name('user.verify');
         Route::post('resend-email', [RegisterController::class, "resendEmail"])->name('user.resend_email');
 

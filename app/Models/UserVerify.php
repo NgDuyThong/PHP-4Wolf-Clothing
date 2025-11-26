@@ -18,6 +18,7 @@ class UserVerify extends Model
         'token',
         'expires_at',
         'email_verify',
+        'data',
     ];
 
     public function user()

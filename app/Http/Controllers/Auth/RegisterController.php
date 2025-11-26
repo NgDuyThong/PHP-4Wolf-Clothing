@@ -183,29 +183,12 @@ class RegisterController extends Controller
         
     }
 
-    // hàm store dùng để xử lý logic và lưu vào csdl
+    // hàm store dùng để xử lý logic đăng ký (chỉ gửi mail, chưa tạo tài khoản)
     public function store(UserRegisterRequest $request)
     {
         try {
             // lấy tất cả dữ liệu từ phía người dùng gửi lên
             $data = $request->validated();
-            // lấy thông tin từ phía khách hàng để thêm vào vào csdl
-            $userData = [
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'password' => Hash::make($data['password']), // Hash password trực tiếp
-                'phone_number' => $data['phone_number'],
-                'role_id' => Role::ROLE['user'],
-                'active' => 1, // Tài khoản mặc định là active
-            ];
-            
-            // lấy thông tin địa chỉ từ phía khách hàng để thêm vào vào csdl
-            $addressData = [
-                'city' => $data['city'],
-                'district' => $data['district'],
-                'ward' => $data['ward'],
-                'apartment_number' => $data['apartment_number'],
-            ];
             
             // tạo ra token để gửi mail xác thực tài khoản
             $token = Str::random(64);
@@ -214,47 +197,35 @@ class RegisterController extends Controller
 
             
             DB::beginTransaction();
-            // Password đã được hash ở trên bằng Hash::make()
-            // Mutator sẽ kiểm tra: nếu password có độ dài 60 và bắt đầu bằng $2y$/$2a$/$2b$ 
-            // thì sẽ không hash lại, giữ nguyên password đã hash
-            $user = $this->userRepository->create($userData);
-
-            //thêm token vào database
+            // Lưu thông tin đăng ký tạm thời vào bảng user_verifies (chưa tạo tài khoản)
             UserVerify::updateOrCreate(
-                ['user_id' => $user->id],
+                [
+                    'email_verify' => $data['email'],
+                    'user_id' => null,
+                ],
                 [
                     'token' => $token,
                     'expires_at' => Carbon::now()->addMinutes($time),
+                    'data' => json_encode($data),
                 ]
             );
             
-            //thêm địa của khách hàng vào trong csdl
-            $addressData['user_id'] = $user->id;
-            $this->addressRepository->updateOrCreate($addressData);
-            
-            // Tạm thời tự động verify email để test (không cần gửi email)
-            // TODO: Bỏ dòng này khi đã cấu hình email xong
-            $user->email_verified_at = Carbon::now();
-            $user->save();
-            
-            // Xóa token verify vì đã tự động verify
-            UserVerify::where('user_id', $user->id)->delete();
-            
             DB::commit();
-            
-            // Gửi mail cho người dùng xác thực tài khoản (tạm thời bỏ qua vì đã tự động verify)
-            // Uncomment dòng dưới khi đã cấu hình email xong
-            /*
+
+            // Gửi email xác thực tài khoản cho người dùng (chỉ khi lưu tạm thành công)
             try {
-                $user->notify(new VerifyUserRegister($token));
+                // Gửi tới email khách hàng với token xác thực
+                (new User(['email' => $data['email'], 'name' => $data['name']]))
+                    ->notify(new VerifyUserRegister($token));
             } catch (\Exception $emailException) {
-                Log::warning('Failed to send verification email to user: ' . $user->email);
+                Log::warning('Failed to send verification email to user: ' . $data['email']);
                 Log::warning('Email error: ' . $emailException->getMessage());
+                return redirect()->route('user.login')
+                    ->with('error', 'Đăng ký thành công nhưng gửi email xác thực thất bại, vui lòng thử lại sau.');
             }
-            */
-            
-            // Chuyển hướng trực tiếp đến trang chủ vì đã tự động verify
-            return redirect()->route('user.home')->with('success', 'Đăng ký thành công! Bạn có thể đăng nhập ngay.');
+
+            // Sau khi đăng ký thành công, yêu cầu người dùng kiểm tra email để xác thực
+            return redirect()->route('user.login')->with('success', 'Đăng ký thành công! Vui lòng kiểm tra email để xác thực tài khoản trước khi đăng nhập.');
         } catch (Exception $e) {
             // khi có lỗi xảy ra thì xóa bỏ dữ thêm vào database trước đó
             Log::error('Register Error: ' . $e->getMessage());

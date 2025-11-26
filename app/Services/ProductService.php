@@ -169,16 +169,13 @@ class ProductService
                     'greaterThanImportPrice' => true,
                     'number' => true
                 ],
-                'branch' => [
-                    'required' => true,
-                ],
-                'origin' => [
+                'brand_id' => [
                     'required' => true,
                 ],
                 'category_id' => [
                     'required' => true,
                 ],
-                'summernote' => [
+                'description' => [
                     'required' => true,
                 ],
                 'file-input' => [
@@ -200,16 +197,13 @@ class ProductService
                     'greaterThanImportPrice' => 'Giá bán phải lớn hơn giá nhập',
                     'number' => 'Giá bán phải là số'
                 ],
-                'branch' => [
+                'brand_id' => [
                     'required' => __('message.required', ['attribute' => 'thương hiệu sản phẩm']),
-                ],
-                'origin' => [
-                    'required' => __('message.required', ['attribute' => 'xuất xứ']),
                 ],
                 'category_id' => [
                     'required' => __('message.required', ['attribute' => 'danh mục']),
                 ],
-                'summernote' => [
+                'description' => [
                     'required' => __('message.required', ['attribute' => 'mô tả']),
                 ],
                 'file-input' => [
@@ -247,7 +241,7 @@ class ProductService
     {
         $categoriesParent = category_header();
         $brands = $this->brandRepository->all();
-        //Rules form
+        //Rules form  
         $rules = [
             'name' => [
                 'required' => true,
@@ -261,19 +255,13 @@ class ProductService
                 'greaterThanImportPrice' => true,
                 'number' => true
             ],
-            'branch' => [
-                'required' => true,
-            ],
-            'origin' => [
+            'brand_id' => [
                 'required' => true,
             ],
             'category_id' => [
                 'required' => true,
             ],
-            'summernote' => [
-                'required' => true,
-            ],
-            'file-input' => [
+            'description' => [
                 'required' => true,
             ],
         ];
@@ -292,20 +280,14 @@ class ProductService
                 'greaterThanImportPrice' => 'Giá bán phải lớn hơn giá nhập',
                 'number' => 'Giá bán phải là số'
             ],
-            'branch' => [
+            'brand_id' => [
                 'required' => __('message.required', ['attribute' => 'thương hiệu sản phẩm']),
-            ],
-            'origin' => [
-                'required' => __('message.required', ['attribute' => 'xuất xứ']),
             ],
             'category_id' => [
                 'required' => __('message.required', ['attribute' => 'danh mục']),
             ],
-            'summernote' => [
+            'description' => [
                 'required' => __('message.required', ['attribute' => 'mô tả']),
-            ],
-            'file-input' => [
-                'required' => __('message.required', ['attribute' => 'hình ảnh']),
             ],
         ];
         return [

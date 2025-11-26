@@ -411,7 +411,7 @@ class UserService
                     'attribute' => 'phone_number',
                     'label' => 'Số Điện Thoại',
                     'type' => 'text',
-                    // 'format_phone' => true,
+                    'format_phone' => true,
                     'value' => $user->phone_number,
                 ],
                 [

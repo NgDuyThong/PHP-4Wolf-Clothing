@@ -35,7 +35,7 @@
         autocomplete="{{$field['autocomplete'] ?? null}}"
         {{$field['other'] ?? null}}
         @if (isset($field['format_phone']))
-          data-inputmask='"mask": "999 999-9999"' data-mask
+          data-inputmask='"mask": "9999999999"' data-mask
         @endif
         class="form-control">
       @endif

@@ -108,8 +108,8 @@
                 </div>
               </div>
               <div class="col-12 text-center" style="padding-bottom: 10px;">
-                <button class="btn btn-success">CẬP NHẬT</button>
-                <button class="btn btn-danger">HỦY</button>
+                <button type="submit" class="btn btn-success">CẬP NHẬT</button>
+                <a href="{{ route('admin.product_index') }}" class="btn btn-danger">HỦY</a>
               </div>
             </div>
           </div>

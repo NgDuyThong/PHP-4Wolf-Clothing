@@ -15,7 +15,15 @@
 
 			<div class="col-12">
 				<div class="card">
-					<div class="card-header text-right">
+					<div class="card-header d-flex justify-content-between">
+						<div>
+							<a href="{{ route('admin.product_index') }}" class="btn btn-secondary">
+								<i class="fas fa-times"></i> Hủy
+							</a>
+							<a href="{{ $routeSize }}" class="btn btn-primary">
+								<i class="fas fa-arrow-right"></i> Tiếp tục
+							</a>
+						</div>
 						<button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-default">
 							<i class="fas fa-plus"></i> Thêm Màu
 						</button>

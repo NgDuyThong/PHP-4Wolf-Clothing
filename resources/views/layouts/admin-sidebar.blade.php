@@ -6,7 +6,7 @@
       <div class="d-flex align-items-center justify-content-between">
         <a href="index.html" class="logo d-flex align-items-center">
           <img src="{{ asset('asset/admin/v1/assets/img/logo.png') }}" alt="">
-          <span class="d-none d-lg-block">{{ (Auth::guard('admin')->user()->id == 1) ? 'Quản Trị Viên' : 'Nhân Viên'}}</span>
+          <span class="d-none d-lg-block">4WolfStore</span>
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
       </div><!-- End Logo -->

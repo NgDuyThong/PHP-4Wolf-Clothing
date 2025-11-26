@@ -101,7 +101,13 @@
                     </div>
                     <div class="form-group">
                       <label for="exampleInputEmail1">Địa Chỉ Nhà</label>
-                      <input type="text" class="form-control" value="{{ $apartment_number}}" id="apartment_number" name="apartment_number" aria-describedby="emailHelp" placeholder="Nhập địa chỉ nhà">
+                      <div style="display: flex; gap: 10px;">
+                        <input type="text" class="form-control" value="{{ $apartment_number}}" id="apartment_number" name="apartment_number" aria-describedby="emailHelp" placeholder="Nhập địa chỉ nhà" style="flex: 1;">
+                        <button type="button" class="btn btn-info" id="get-location-btn" style="white-space: nowrap;">
+                          <i class="fa fa-map-marker"></i> Lấy vị trí
+                        </button>
+                      </div>
+                      <small id="location-status" style="display: none; color: #666; margin-top: 5px;"></small>
                       @if ($errors->get('apartment_number'))
                         <span id="apartment_number-error" class="error invalid-feedback" style="display: block">
                           {{ implode(", ",$errors->get('apartment_number')) }}

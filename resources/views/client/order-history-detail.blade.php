@@ -57,6 +57,19 @@
                 <td colspan="7">Phí Vận Chuyển</td>
                 <td style="font-weight: 600;">{{ format_number_to_money($infomationUser->orders_transport_fee) }} VND</td>
               </tr>
+              @if($order->promotion_id && $order->discount_amount > 0)
+              <tr style="background-color: #d4edda;">
+                <td colspan="7">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <i class="fa fa-ticket" style="color: #28a745;"></i>
+                    <span>Mã Giảm Giá: <strong style="color: #28a745;">{{ $order->promotion->code ?? 'N/A' }}</strong></span>
+                  </div>
+                </td>
+                <td style="font-weight: 600; color: #28a745;">
+                  -{{ format_number_to_money($order->discount_amount) }} VND
+                </td>
+              </tr>
+              @endif
               <tr>
                 <td colspan="7">Phương Thức Thanh Toán</td>
                 <td>

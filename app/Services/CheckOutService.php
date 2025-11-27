@@ -108,12 +108,36 @@ class CheckOutService
             }
             // lấy phí vận chuyển
             $fee = $this->getTransportFee($request->district, $request->ward)."";
+            
+            // Xử lý khuyến mãi
+            $discountAmount = 0;
+            $promotionId = null;
+            if ($request->promotion_id) {
+                $promotion = \App\Models\Promotion::find($request->promotion_id);
+                if ($promotion && $promotion->isValid()) {
+                    $orderTotal = \Cart::getTotal();
+                    if ($promotion->canBeUsedByUser(Auth::id())) {
+                        $discountAmount = $promotion->calculateDiscount($orderTotal);
+                        $promotionId = $promotion->id;
+                        
+                        Log::info('Promotion applied', [
+                            'promotion_id' => $promotionId,
+                            'code' => $promotion->code,
+                            'order_total' => $orderTotal,
+                            'discount_amount' => $discountAmount
+                        ]);
+                    }
+                }
+            }
+            
             //tạo dữ liệu đơn hàng
             $dataOrder = [
                 'id' => time() . mt_rand(111, 999),
                 'payment_id' => $request->payment_method,
+                'promotion_id' => $promotionId,
                 'user_id' => Auth::user()->id,
-                'total_money' => \Cart::getTotal() + $fee,
+                'total_money' => \Cart::getTotal() + $fee - $discountAmount,
+                'discount_amount' => $discountAmount,
                 'order_status' => Order::STATUS_ORDER['wait'],
                 'transport_fee' => $fee,
                 'note' => null,
@@ -138,6 +162,21 @@ class CheckOutService
                 ];
                 $this->orderDetailRepository->create($orderDetail);
             }
+            
+            // Lưu lịch sử sử dụng khuyến mãi
+            if ($promotionId && $discountAmount > 0) {
+                \App\Models\PromotionUsage::create([
+                    'promotion_id' => $promotionId,
+                    'user_id' => Auth::id(),
+                    'order_id' => $order->id,
+                    'discount_amount' => $discountAmount,
+                    'used_at' => now()
+                ]);
+                
+                // Tăng số lần sử dụng
+                $promotion->increment('usage_count');
+            }
+            
             DB::commit();
             // xóa toàn bộ sản phẩm trong giỏ hàng
             \Cart::clear();

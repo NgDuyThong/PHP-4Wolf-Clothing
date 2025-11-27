@@ -38,6 +38,7 @@ export default defineConfig({
                 'resources/admin/js/edit-order.js',
                 'resources/admin/js/filter-order.js',
                 'resources/admin/js/statistical.js',
+                'resources/client/js/promotion.js',
             ],
             refresh: true,
         }),

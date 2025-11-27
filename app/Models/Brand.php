@@ -26,5 +26,13 @@ class Brand extends Model
      */
     protected $fillable = [
         'name',
+        'img',
+        'description'
     ];
+
+    // Relationship với products
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

@@ -1,0 +1,21 @@
+/* Promotion Styles */
+
+.condition-list {
+    position: relative;
+    height: 120px;
+    overflow-y: auto;
+}
+
+.condition-list ul {
+    margin: 0;
+    padding-left: 1rem;
+}
+
+.condition-list li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+.condition-list i {
+    margin-right: 0.5rem;
+}

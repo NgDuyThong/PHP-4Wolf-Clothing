@@ -197,18 +197,17 @@ class RegisterController extends Controller
 
             
             DB::beginTransaction();
+            // Xóa bản ghi cũ nếu có (cùng email)
+            UserVerify::where('email_verify', $data['email'])->delete();
+            
             // Lưu thông tin đăng ký tạm thời vào bảng user_verifies (chưa tạo tài khoản)
-            UserVerify::updateOrCreate(
-                [
-                    'email_verify' => $data['email'],
-                    'user_id' => null,
-                ],
-                [
-                    'token' => $token,
-                    'expires_at' => Carbon::now()->addMinutes($time),
-                    'data' => json_encode($data),
-                ]
-            );
+            UserVerify::create([
+                'email_verify' => $data['email'],
+                'user_id' => null,
+                'token' => $token,
+                'expires_at' => Carbon::now()->addMinutes($time),
+                'data' => json_encode($data),
+            ]);
             
             DB::commit();
 

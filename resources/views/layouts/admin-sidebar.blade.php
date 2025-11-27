@@ -150,6 +150,14 @@
                 <i class="bi bi-circle"></i><span>Đơn Hàng</span>
               </a>
             </li>
+            <li>
+              @php
+                 $isRouteUser = request()->is('admin/promotions*');
+              @endphp
+              <a href="{{ route('admin.promotions.index') }}" class="{{ ($isRouteUser) ? 'active' : '' }}">
+                <i class="bi bi-circle"></i><span>Khuyến Mãi</span>
+              </a>
+            </li>
           </ul>
         </li>
 

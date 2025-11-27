@@ -20,6 +20,8 @@
   <!-- =====  MOBILE SPECIFICATION  ===== -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="viewport" content="width=device-width">
+  <!-- =====  CSRF TOKEN  ===== -->
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- =====  CSS  ===== -->
   <link rel="stylesheet" href="{{ asset('asset/admin/plugins/fontawesome-free/css/all.min.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ asset('asset/client/css/bootstrap.css') }}" />
@@ -165,6 +167,9 @@
                   </li>
                 @endforeach
                 <li>
+                    <a href="{{ route('user.promotions') }}">Khuyến Mãi</a>
+                </li>
+                <li>
                     <a href="{{ route('user.introduction') }}">Giới Thiệu</a>
                 </li>
               </ul>
@@ -266,10 +271,10 @@
           <div class="col-md-3 footer-block">
             <h6 class="footer-title ptb_20">Tiện ích bổ sung</h6>
             <ul>
-              <li><a href="#">Thương hiệu</a></li>
-              <li><a href="#">Giấy chứng nhận quà tặng</a></li>
-              <li><a href="#">Khuyến mãi</a></li>
-              <li><a href="#">Bản tin</a></li>
+              <li><a href="{{ route('user.brands') }}">Thương hiệu</a></li>
+              <li><a href="{{ route('user.gift_certificates') }}">Giấy chứng nhận quà tặng</a></li>
+              <li><a href="{{ route('user.promotions') }}">Khuyến mãi</a></li>
+              <li><a href="{{ route('user.newsletter') }}">Bản tin</a></li>
             </ul>
           </div>
           <div class="col-md-3 footer-block">

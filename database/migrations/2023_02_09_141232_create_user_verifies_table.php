@@ -16,10 +16,11 @@ return new class extends Migration
         Schema::dropIfExists('user_verifies');
         Schema::create('user_verifies', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
+            $table->integer('user_id')->nullable();
             $table->string('token')->nullable()->default(null);
             $table->timestamp('expires_at')->nullable();
             $table->string('email_verify')->nullable();
+            $table->text('data')->nullable()->comment('Dữ liệu đăng ký tạm thời');
             $table->timestamps();
             $table->softDeletes();
         });

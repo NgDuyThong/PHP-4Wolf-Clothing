@@ -27,8 +27,10 @@ class Order extends Model
     protected $fillable = [
         'id',
         'payment_id',
+        'promotion_id',
         'user_id',
         'total_money',
+        'discount_amount',
         'order_status',
         'transport_fee',
         'note',
@@ -54,4 +56,25 @@ class Order extends Model
     const ORDER_NUMBER_ITEM = [
         'history' => 10,
     ];
+
+    // Relationships
+    public function promotion()
+    {
+        return $this->belongsTo(Promotion::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function payment()
+    {
+        return $this->belongsTo(Payment::class);
+    }
+
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class);
+    }
 }

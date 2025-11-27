@@ -126,6 +126,16 @@ Route::middleware(['auth.admin', 'admin.verified'])->group(function () {
         Route::post('delete', [SizeController::class, "delete"])->name('admin.sizes_delete');
     });
 
+    Route::group(['prefix' => 'promotions'], function(){
+        Route::get('/', [\App\Http\Controllers\Admin\PromotionController::class, "index"])->name('admin.promotions.index');
+        Route::get('create', [\App\Http\Controllers\Admin\PromotionController::class, "create"])->name('admin.promotions.create');
+        Route::post('create', [\App\Http\Controllers\Admin\PromotionController::class, "store"])->name('admin.promotions.store');
+        Route::get('edit/{promotion}', [\App\Http\Controllers\Admin\PromotionController::class, "edit"])->name('admin.promotions.edit');
+        Route::put('update/{promotion}', [\App\Http\Controllers\Admin\PromotionController::class, "update"])->name('admin.promotions.update');
+        Route::delete('delete/{promotion}', [\App\Http\Controllers\Admin\PromotionController::class, "destroy"])->name('admin.promotions.destroy');
+        Route::patch('toggle/{promotion}', [\App\Http\Controllers\Admin\PromotionController::class, "toggleStatus"])->name('admin.promotions.toggle');
+    });
+
     Route::middleware('auth.admin_author:admin')->group(function () {
 
         Route::group(['prefix' => 'setting'], function(){

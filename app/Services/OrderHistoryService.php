@@ -37,6 +37,9 @@ class OrderHistoryService
 
     public function show(Order $order)
     {
+        // Load promotion relationship
+        $order->load('promotion');
+        
         return [
             //lấy thông tin đơn hàng
             'order' => $order,

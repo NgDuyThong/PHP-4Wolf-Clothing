@@ -37,6 +37,25 @@ Route::middleware(['maintenance'])->group(function () {
     Route::get('store-locations', [App\Http\Controllers\PageController::class, "storeLocations"])->name('user.store_locations');
     //FE: Trang danh sách yêu thích
     Route::get('wishlist', [App\Http\Controllers\WishlistController::class, "index"])->name('user.wishlist');
+    //FE: Trang khuyến mãi
+    Route::get('promotions', [App\Http\Controllers\PromotionController::class, "index"])->name('user.promotions');
+    //API: Kiểm tra mã khuyến mãi
+    Route::post('api/promotions/validate', [App\Http\Controllers\PromotionController::class, "validatePromotion"])->name('api.promotions.validate');
+    
+    //FE: Trang thương hiệu
+    Route::get('brands', [App\Http\Controllers\BrandPageController::class, "index"])->name('user.brands');
+    Route::get('brands/{id}', [App\Http\Controllers\BrandPageController::class, "show"])->name('user.brand.show');
+    
+    //FE: Trang giấy chứng nhận quà tặng
+    Route::get('gift-certificates', [App\Http\Controllers\GiftCertificateController::class, "index"])->name('user.gift_certificates');
+    //API: Kiểm tra mã giấy chứng nhận
+    Route::post('api/gift-certificates/check', [App\Http\Controllers\GiftCertificateController::class, "check"])->name('api.gift_certificates.check');
+    
+    //FE: Trang đăng ký nhận bản tin
+    Route::get('newsletter', [App\Http\Controllers\NewsletterController::class, "index"])->name('user.newsletter');
+    //API: Đăng ký nhận bản tin
+    Route::post('api/newsletter/subscribe', [App\Http\Controllers\NewsletterController::class, "subscribe"])->name('api.newsletter.subscribe');
+    Route::post('api/newsletter/unsubscribe', [App\Http\Controllers\NewsletterController::class, "unsubscribe"])->name('api.newsletter.unsubscribe');
     //API: Lấy sản phẩm ngẫu nhiên cho gợi ý (phải đặt trước api/products)
     Route::get('api/products/random', function(\Illuminate\Http\Request $request) {
         $limit = $request->input('limit', 4);
@@ -95,6 +114,9 @@ Route::middleware(['maintenance'])->group(function () {
             Route::get('/detail/{order}', [OrderHistoryController::class, 'show'])->name('order_history.show');
             Route::get('/update/{order}', [OrderHistoryController::class, 'update'])->name('order_history.update');
         });
+        
+        //FE: Trang giấy chứng nhận của tôi
+        Route::get('my-gift-certificates', [App\Http\Controllers\GiftCertificateController::class, 'myGiftCertificates'])->name('user.my-gift-certificates');
     
     
     });

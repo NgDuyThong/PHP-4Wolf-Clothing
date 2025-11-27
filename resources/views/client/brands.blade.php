@@ -48,7 +48,10 @@
         <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
             <div class="brand-card">
                 @if($brand->img)
-                    <img src="{{ asset('storage/' . $brand->img) }}" alt="{{ $brand->name }}" class="brand-logo">
+                    <img src="{{ asset('asset/client/images/brand/' . $brand->img) }}" 
+                         alt="{{ $brand->name }}" 
+                         class="brand-logo"
+                         onerror="this.onerror=null; this.src='{{ asset('asset/client/images/no-image.png') }}';">
                 @else
                     <div class="brand-logo d-flex align-items-center justify-content-center" style="background: #f5f5f5;">
                         <i class="fa fa-image fa-3x" style="color: #ccc;"></i>

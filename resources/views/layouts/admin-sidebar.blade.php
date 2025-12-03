@@ -102,10 +102,18 @@
             </li>
             <li>
               @php
-                 $isRouteUser = request()->is('admin/products*');
+                 $isRouteUser = request()->is('admin/products') || request()->is('admin/products/create') || request()->is('admin/products/update/*') || request()->is('admin/products/color/*') || request()->is('admin/products/size/*');
               @endphp
               <a href="{{ route('admin.product_index') }}" class="{{ ($isRouteUser) ? 'active' : '' }}">
                 <i class="bi bi-circle"></i><span>Sản Phẩm</span>
+              </a>
+            </li>
+            <li>
+              @php
+                 $isRouteTrash = request()->is('admin/products/trash');
+              @endphp
+              <a href="{{ route('admin.products_trash') }}" class="{{ ($isRouteTrash) ? 'active' : '' }}">
+                <i class="bi bi-trash"></i><span>Thùng Rác SP</span>
               </a>
             </li>
             <li>

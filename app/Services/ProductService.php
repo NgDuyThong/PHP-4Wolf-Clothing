@@ -324,11 +324,123 @@ class ProductService
     public function delete(Request $request)
     {
         try{
+            // Soft delete - chỉ đánh dấu deleted_at
             if($this->productRepository->delete($this->productRepository->find($request->id))) {
-                return response()->json(['status' => 'success', 'message' => TextSystemConst::DELETE_SUCCESS], 200);
+                return response()->json(['status' => 'success', 'message' => 'Đã chuyển sản phẩm vào thùng rác'], 200);
             }
 
             return response()->json(['status' => 'failed', 'message' => TextSystemConst::DELETE_FAILED], 200);
+        } catch (Exception $e) {
+            Log::error($e);
+            return response()->json(['status' => 'error', 'message' => TextSystemConst::SYSTEM_ERROR], 200);
+        }
+    }
+
+    public function trash()
+    {
+        // Lấy tất cả sản phẩm đã xóa (soft deleted)
+        $list = Product::onlyTrashed()
+            ->join('categories', 'products.category_id', '=', 'categories.id')
+            ->select('products.*', 'categories.name as category_name')
+            ->orderByDesc('products.deleted_at')
+            ->get();
+
+        $tableCrud = [
+            'headers' => [
+                [
+                    'text' => 'Mã SP',
+                    'key' => 'id',
+                ],
+                [
+                    'text' => 'Tên SP',
+                    'key' => 'name',
+                ],
+                [
+                    'text' => 'Hình Ảnh',
+                    'key' => 'img',
+                    'img' => [
+                        'url' => 'asset/client/images/products/small/',
+                        'style' => 'width: 100px;'
+                    ],
+                ],
+                [
+                    'text' => 'Danh Mục',
+                    'key' => 'category_name',
+                ],
+                [
+                    'text' => 'Giá',
+                    'key' => 'price_sell',
+                    'format' => true,
+                ],
+                [
+                    'text' => 'Ngày xóa',
+                    'key' => 'deleted_at',
+                ],
+            ],
+            'actions' => [
+                'text'          => "Thao Tác",
+                'create'        => false,
+                'createExcel'   => false,
+                'edit'          => false,
+                'deleteAll'     => false,
+                'delete'        => true,
+                'restore'       => true,
+                'viewDetail'    => false,
+            ],
+            'routes' => [
+                'delete' => 'admin.products_force_delete',
+                'restore' => 'admin.products_restore',
+            ],
+            'list' => $list,
+        ];
+
+        return [
+            'title' => 'Thùng Rác - Sản Phẩm Đã Xóa',
+            'tableCrud' => $tableCrud,
+        ];
+    }
+
+    public function forceDelete(Request $request)
+    {
+        try{
+            $product = Product::withTrashed()->find($request->id);
+            if($product) {
+                // Lấy danh sách product_color_ids trước khi xóa
+                $productColorIds = DB::table('products_color')
+                    ->where('product_id', $product->id)
+                    ->pluck('id');
+                
+                // Xóa các kích thước liên quan (products_size)
+                if ($productColorIds->isNotEmpty()) {
+                    DB::table('products_size')->whereIn('product_color_id', $productColorIds)->delete();
+                }
+                
+                // Xóa các màu sắc liên quan (products_color)
+                DB::table('products_color')->where('product_id', $product->id)->delete();
+                
+                // Xóa vĩnh viễn sản phẩm khỏi database
+                $product->forceDelete();
+                return response()->json(['status' => 'success', 'message' => 'Đã xóa vĩnh viễn sản phẩm khỏi database'], 200);
+            }
+
+            return response()->json(['status' => 'failed', 'message' => TextSystemConst::DELETE_FAILED], 200);
+        } catch (Exception $e) {
+            Log::error($e);
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()], 200);
+        }
+    }
+
+    public function restore(Request $request)
+    {
+        try{
+            $product = Product::withTrashed()->find($request->id);
+            if($product && $product->trashed()) {
+                // Khôi phục sản phẩm
+                $product->restore();
+                return response()->json(['status' => 'success', 'message' => 'Đã khôi phục sản phẩm thành công'], 200);
+            }
+
+            return response()->json(['status' => 'failed', 'message' => 'Không thể khôi phục sản phẩm'], 200);
         } catch (Exception $e) {
             Log::error($e);
             return response()->json(['status' => 'error', 'message' => TextSystemConst::SYSTEM_ERROR], 200);

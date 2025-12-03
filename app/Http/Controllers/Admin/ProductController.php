@@ -58,6 +58,21 @@ class ProductController extends Controller
         return $this->productService->delete($request);
     }
 
+    public function trash()
+    {
+        return view('admin.product.trash', $this->productService->trash());
+    }
+
+    public function forceDelete(Request $request)
+    {
+        return $this->productService->forceDelete($request);
+    }
+
+    public function restore(Request $request)
+    {
+        return $this->productService->restore($request);
+    }
+
     public function getCategoryByParent(Request $request)
     {
         return response()->json($this->productService->getCategoryByParent($request), 200);

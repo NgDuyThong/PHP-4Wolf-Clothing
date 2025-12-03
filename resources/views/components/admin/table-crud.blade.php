@@ -63,7 +63,7 @@
                     @foreach ($headers as $header)
                         <th style="text-align: left;">{{ $header['text'] }}</th>
                     @endforeach
-                    @if($actions['viewDetail'] || $actions['edit'] || $actions['delete'])
+                    @if($actions['viewDetail'] || $actions['edit'] || $actions['delete'] || (isset($actions['restore']) && $actions['restore']))
                         <th style="text-align: left;">{{ $actions['text'] }}</th>
                     @endif
                 </tr>
@@ -99,7 +99,7 @@
                                 @endif
                             </td>
                         @endforeach
-                        @if($actions['viewDetail'] || $actions['edit'] || $actions['delete'])
+                        @if($actions['viewDetail'] || $actions['edit'] || $actions['delete'] || (isset($actions['restore']) && $actions['restore']))
                             <td style="text-align: left;">
                                 @if ($actions['edit'])
                                     <a href="{{ isset($routes['edit']) ? route($routes['edit'], $item->id) : '#' }}" id="edit-customer" class="btn btn-primary next-link__js">
@@ -111,12 +111,13 @@
                                         <i class="fas fa-history"></i>
                                     </button>
                                 @endif
+                                @if (isset($actions['restore']) && $actions['restore'])
+                                    <button class="btn btn-success restore__js" data-id="{{$item->id}}" data-url="{{route($routes['restore'])}}">
+                                        <i class="fas fa-undo"></i>
+                                    </button>
+                                @endif
                                 @if ($actions['delete'])
-                                    <form style="display: inline;" action="{{route($routes['delete'])}}" method="POST" id="form-delete__js">
-                                        @csrf
-                                        <input type="text" name="id" value="{{$item->id}}" hidden>
-                                    </form>
-                                    <button id="delete__js" class="btn btn-danger" url="{{route($routes['delete'])}}">
+                                    <button class="btn btn-danger delete__js" data-id="{{$item->id}}" data-url="{{route($routes['delete'])}}">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 @endif

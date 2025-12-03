@@ -57,6 +57,9 @@ Route::middleware(['auth.admin', 'admin.verified'])->group(function () {
 
     Route::group(['prefix' => 'products'], function(){
         Route::get('/', [ProductController::class, "index"])->name('admin.product_index');
+        Route::get('trash', [ProductController::class, "trash"])->name('admin.products_trash');
+        Route::post('force-delete', [ProductController::class, "forceDelete"])->name('admin.products_force_delete');
+        Route::post('restore', [ProductController::class, "restore"])->name('admin.products_restore');
         Route::get('create', [ProductController::class, "create"])->name('admin.products_create');
         Route::post('create', [ProductController::class, "store"])->name('admin.products_store');
         Route::get('update/{product}', [ProductController::class, "edit"])->name('admin.products_edit');

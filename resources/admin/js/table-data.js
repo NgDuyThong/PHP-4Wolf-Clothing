@@ -55,9 +55,11 @@ $(document).ready(function(){
   $('#table-crud_filter input').css('width', '250px');
 
   // Confirm delete
-  $(document).on('click', '#delete__js', function(){
-    let id = $(this).closest('tr').attr('id');
-    let url = $(this).attr('url');
+  $(document).on('click', '.delete__js', function(e){
+    e.preventDefault();
+    let id = $(this).data('id');
+    let url = $(this).data('url');
+    console.log('Delete button clicked - ID:', id, 'URL:', url);
     Swal.fire({
       title: "Bạn có chắc muốn xóa?",
       icon: 'warning',
@@ -82,7 +84,66 @@ $(document).ready(function(){
           // Hidden loading
           $('#loading__js').css('display', 'none');
 
+          console.log('Delete response:', response);
+
           //If delete success
+          if (response.status == 'success') {
+            //Show success toast message 
+            fire(toast, 'success', response.message)
+            // Delete row in data table
+            table.rows(`#${id}`).remove().draw();
+          } else if (response.status == 'failed') {
+            // Show error toast message 
+            fire(toast, 'error', response.message)
+          } else {
+            // Show error toast message 
+            fire(toast, 'error', response.message)
+            // Reload page
+            setTimeout(()=>{
+              location.reload();
+            }, 2000);
+          }
+        }).fail((xhr, status, error) => {
+          // Hidden loading
+          $('#loading__js').css('display', 'none');
+          console.error('Delete AJAX error:', xhr.responseText, status, error);
+          fire(toast, 'error', 'Có lỗi xảy ra: ' + error);
+        })
+      }
+    })
+  });
+
+  // Confirm restore
+  $(document).on('click', '.restore__js', function(e){
+    e.preventDefault();
+    let id = $(this).data('id');
+    let url = $(this).data('url');
+    console.log('Restore button clicked - ID:', id, 'URL:', url);
+    Swal.fire({
+      title: "Bạn có chắc muốn khôi phục sản phẩm này?",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#28a745',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'CÓ',
+      cancelButtonText: 'KHÔNG',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Display loading
+        $('#loading__js').css('display', 'flex');
+
+        // Call api restore product
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: {
+            id: id
+          }
+        }).done((response) => {
+          // Hidden loading
+          $('#loading__js').css('display', 'none');
+
+          //If restore success
           if (response.status == 'success') {
             //Show success toast message 
             fire(toast, 'success', response.message)

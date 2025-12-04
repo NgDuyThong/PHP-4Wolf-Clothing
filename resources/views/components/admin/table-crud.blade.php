@@ -36,9 +36,17 @@
                             <option value="" {{ (request()->status == '') ? 'selected' : '' }}>Trạng thái đơn hàng (Tất cả)</option>
                             <option value="0" {{ (request()->status == '0') ? 'selected' : '' }}>Chờ xử lý</option>
                             <option value="1" {{ (request()->status == '1') ? 'selected' : '' }}>Đã xác nhận</option>
-                            <option value="1" {{ (request()->status == '4') ? 'selected' : '' }}>Đang giao hàng</option>
-                            <option value="3" {{ (request()->status == '3') ? 'selected' : '' }}>Đã nhận hàng</option>
                             <option value="2" {{ (request()->status == '2') ? 'selected' : '' }}>Đã hủy</option>
+                            <option value="3" {{ (request()->status == '3') ? 'selected' : '' }}>Đã nhận hàng</option>
+                            <option value="4" {{ (request()->status == '4') ? 'selected' : '' }}>Đang giao hàng</option>
+                            <option value="5" {{ (request()->status == '5') ? 'selected' : '' }}>Đang chuẩn bị hàng</option>
+                            <option value="6" {{ (request()->status == '6') ? 'selected' : '' }}>Đã giao cho ĐVVC</option>
+                            <option value="7" {{ (request()->status == '7') ? 'selected' : '' }}>Giao hàng thất bại</option>
+                            <option value="8" {{ (request()->status == '8') ? 'selected' : '' }}>Chờ thanh toán</option>
+                            <option value="9" {{ (request()->status == '9') ? 'selected' : '' }}>Đã thanh toán</option>
+                            <option value="10" {{ (request()->status == '10') ? 'selected' : '' }}>Hoàn trả/Đổi hàng</option>
+                            <option value="11" {{ (request()->status == '11') ? 'selected' : '' }}>Đã hoàn tiền</option>
+                            <option value="12" {{ (request()->status == '12') ? 'selected' : '' }}>Chờ xác nhận hủy</option>
                         </select>
                     </div>
                     <div class="mb-3 col-sm-3">

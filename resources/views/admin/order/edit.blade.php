@@ -118,10 +118,19 @@
     <form action="{{ route('admin.orders_update', $order->id) }}" method="post" class="row g-3">
       @csrf
       <div class="form-group">
+        <label for="order_status">Trạng thái đơn hàng</label>
         <select class="form-control" name="order_status" id="order_status">
-          <option value="1">Xác Nhận</option>
-          <option value="4">Vận chuyển</option>
-          <option value="2">Hủy</option>
+          <option value="1">Đã Xác Nhận</option>
+          <option value="5">Đang Chuẩn Bị Hàng</option>
+          <option value="6">Đã Giao Cho ĐVVC</option>
+          <option value="4">Đang Giao Hàng</option>
+          <option value="7">Giao Hàng Thất Bại</option>
+          <option value="3">Đã Nhận Hàng</option>
+          <option value="8">Chờ Thanh Toán</option>
+          <option value="9">Đã Thanh Toán</option>
+          <option value="10">Hoàn Trả/Đổi Hàng</option>
+          <option value="11">Đã Hoàn Tiền</option>
+          <option value="2">Đã Hủy</option>
         </select>
       </div>
       <div class="form-group">

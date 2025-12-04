@@ -41,16 +41,28 @@ class Order extends Model
         'name'
     ];
 
+    // Trạng thái đơn hàng
     const STATUS_ORDER = [
-        'wait' => 0,
-        'transporting' => 1,
-        'cancel' => 2,
-        'received' => 3,
+        'pending' => 0,              // Chờ xử lý
+        'confirmed' => 1,            // Đã xác nhận
+        'cancelled' => 2,            // Đã hủy
+        'completed' => 3,            // Đã nhận hàng
+        'shipping' => 4,             // Đang giao hàng
+        'preparing' => 5,            // Đang chuẩn bị hàng
+        'shipped' => 6,              // Đã giao cho đơn vị vận chuyển
+        'delivery_failed' => 7,      // Giao hàng thất bại
+        'payment_pending' => 8,      // Chờ thanh toán
+        'paid' => 9,                 // Đã thanh toán
+        'returning' => 10,           // Hoàn trả/Đổi hàng
+        'refunded' => 11,            // Đã hoàn tiền
+        'cancel_pending' => 12,      // Chờ xác nhận hủy
     ];
 
+    // Trạng thái thanh toán
     const PAYMENT_STATUS = [
-        'unpaid' => 0,
-        'paid' => 1,
+        'unpaid' => 0,               // Chưa thanh toán
+        'paid' => 1,                 // Đã thanh toán
+        'refunded' => 2,             // Đã hoàn tiền
     ];
 
     const ORDER_NUMBER_ITEM = [

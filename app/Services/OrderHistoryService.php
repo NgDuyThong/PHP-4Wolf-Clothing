@@ -54,9 +54,9 @@ class OrderHistoryService
     {
         try {
             switch($order->order_status){
-                case 0:
+                case Order::STATUS_ORDER['pending']:
                     // nếu trạng thái đang là chờ xử lý thì cập nhật thành hủy
-                    $this->orderRepository->update($order, ['order_status' => Order::STATUS_ORDER['cancel']]);
+                    $this->orderRepository->update($order, ['order_status' => Order::STATUS_ORDER['cancelled']]);
                     $orderDetails = OrderDetail::where('order_id', $order->id)->get();
                     // khi hủy đơn hàng sẽ hoàn trả số lượng vào lại kho
                     foreach($orderDetails as $orderDetail) {
@@ -64,15 +64,15 @@ class OrderHistoryService
                         $productSize->update(['quantity' => $productSize->quantity + $orderDetail->quantity]);
                     }
                     return back()->with('success', TextSystemConst::MESS_ORDER_HISTORY['cancel']);
-                case 4:
+                case Order::STATUS_ORDER['shipping']:
                     // nếu trạng thái đang là đang giao hàng thì cập nhật thành đã nhận hàng
-                    $this->orderRepository->update($order, ['order_status' => Order::STATUS_ORDER['received']]);
+                    $this->orderRepository->update($order, ['order_status' => Order::STATUS_ORDER['completed']]);
                     return back()->with('success', TextSystemConst::MESS_ORDER_HISTORY['confirm']);
-                case 2:
+                case Order::STATUS_ORDER['cancelled']:
                     // nếu trạng thái đang là hủy thì cập thành xóa
                     $this->orderRepository->delete($order);
                     return back()->with('success', TextSystemConst::MESS_ORDER_HISTORY['delete']);
-                case 3:
+                case Order::STATUS_ORDER['completed']:
                     // nếu trạng thái đang là đã nhận hàng thì cập thành xóa
                     $this->orderRepository->delete($order);
                     return back()->with('success', TextSystemConst::MESS_ORDER_HISTORY['delete']);

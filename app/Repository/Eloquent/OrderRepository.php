@@ -36,7 +36,7 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
         ->orderByDesc('orders.created_at')
         ->whereNull('orders.deleted_at');
         if (isset($params['status'])) {
-            if ($params['status'] >= 0 & $params['status'] <= 3)
+            if ($params['status'] >= 0 && $params['status'] <= 12)
             $query->where('order_status', $params['status']);
         }
         $startDate = Carbon::now()->subMonths(3)->startOfMonth()->toDateString();

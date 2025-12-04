@@ -50,14 +50,30 @@
                     <td>
                       @if ($orderHistory->order_status == 0)
                           <span class="badge bg-warning">Chờ xử lý</span>
-                      @elseif($orderHistory->order_status == 4)
-                          <span class="badge bg-info">Đang giao hàng</span>
                       @elseif($orderHistory->order_status == 1)
                           <span class="badge bg-info">Đã xác nhận</span>
                       @elseif($orderHistory->order_status == 2)
                           <span class="badge bg-danger">Đã hủy</span>
                       @elseif($orderHistory->order_status == 3)
                           <span class="badge bg-success">Đã nhận hàng</span>
+                      @elseif($orderHistory->order_status == 4)
+                          <span class="badge bg-primary">Đang giao hàng</span>
+                      @elseif($orderHistory->order_status == 5)
+                          <span class="badge bg-info">Đang chuẩn bị hàng</span>
+                      @elseif($orderHistory->order_status == 6)
+                          <span class="badge bg-primary">Đã giao cho ĐVVC</span>
+                      @elseif($orderHistory->order_status == 7)
+                          <span class="badge bg-warning">Giao hàng thất bại</span>
+                      @elseif($orderHistory->order_status == 8)
+                          <span class="badge bg-secondary">Chờ thanh toán</span>
+                      @elseif($orderHistory->order_status == 9)
+                          <span class="badge bg-success">Đã thanh toán</span>
+                      @elseif($orderHistory->order_status == 10)
+                          <span class="badge bg-warning">Hoàn trả/Đổi hàng</span>
+                      @elseif($orderHistory->order_status == 11)
+                          <span class="badge bg-info">Đã hoàn tiền</span>
+                      @elseif($orderHistory->order_status == 12)
+                          <span class="badge bg-secondary">Chờ xác nhận hủy</span>
                       @endif
                     </td>
                     <td>{{ $orderHistory->note }}</td>

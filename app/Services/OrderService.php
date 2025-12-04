@@ -72,28 +72,68 @@ class OrderService
                     'status' => [
                         [
                             'text' => 'Chờ Xử Lý',
-                            'value' => Order::STATUS_ORDER['wait'],
+                            'value' => Order::STATUS_ORDER['pending'],
                             'class' => 'badge bg-warning'
                         ],
                         [
-                            'text' => 'Đã xác nhận',
-                            'value' => Order::STATUS_ORDER['transporting'],
-                            'class' => 'badge bg-info'
-                        ],
-                        [
-                            'text' => 'Đang Giao Hàng',
-                            'value' => 4,
+                            'text' => 'Đã Xác Nhận',
+                            'value' => Order::STATUS_ORDER['confirmed'],
                             'class' => 'badge bg-info'
                         ],
                         [
                             'text' => 'Đã Hủy',
-                            'value' => Order::STATUS_ORDER['cancel'],
+                            'value' => Order::STATUS_ORDER['cancelled'],
                             'class' => 'badge bg-danger'
                         ],
                         [
                             'text' => 'Đã Nhận Hàng',
-                            'value' => Order::STATUS_ORDER['received'],
+                            'value' => Order::STATUS_ORDER['completed'],
                             'class' => 'badge bg-success'
+                        ],
+                        [
+                            'text' => 'Đang Giao Hàng',
+                            'value' => Order::STATUS_ORDER['shipping'],
+                            'class' => 'badge bg-primary'
+                        ],
+                        [
+                            'text' => 'Đang Chuẩn Bị Hàng',
+                            'value' => Order::STATUS_ORDER['preparing'],
+                            'class' => 'badge bg-info'
+                        ],
+                        [
+                            'text' => 'Đã Giao Cho ĐVVC',
+                            'value' => Order::STATUS_ORDER['shipped'],
+                            'class' => 'badge bg-primary'
+                        ],
+                        [
+                            'text' => 'Giao Hàng Thất Bại',
+                            'value' => Order::STATUS_ORDER['delivery_failed'],
+                            'class' => 'badge bg-warning'
+                        ],
+                        [
+                            'text' => 'Chờ Thanh Toán',
+                            'value' => Order::STATUS_ORDER['payment_pending'],
+                            'class' => 'badge bg-secondary'
+                        ],
+                        [
+                            'text' => 'Đã Thanh Toán',
+                            'value' => Order::STATUS_ORDER['paid'],
+                            'class' => 'badge bg-success'
+                        ],
+                        [
+                            'text' => 'Hoàn Trả/Đổi Hàng',
+                            'value' => Order::STATUS_ORDER['returning'],
+                            'class' => 'badge bg-warning'
+                        ],
+                        [
+                            'text' => 'Đã Hoàn Tiền',
+                            'value' => Order::STATUS_ORDER['refunded'],
+                            'class' => 'badge bg-info'
+                        ],
+                        [
+                            'text' => 'Chờ Xác Nhận Hủy',
+                            'value' => Order::STATUS_ORDER['cancel_pending'],
+                            'class' => 'badge bg-secondary'
                         ],
                     ],
                 ],
@@ -148,8 +188,9 @@ class OrderService
     {
         try {
             $data = $request->all();
-            // hoàn trả lại số lượng
-            if ($request->order_status == 2) {
+            // hoàn trả lại số lượng khi hủy đơn hoặc hoàn trả
+            if ($request->order_status == Order::STATUS_ORDER['cancelled'] || 
+                $request->order_status == Order::STATUS_ORDER['refunded']) {
                 // lấy những phẩm thuộc đơn hàng bị hủy
                 $orderDetails = OrderDetail::where('order_id', $order->id)->get();
                 // duyệt qua tất cả sản phẩm và trả số lượng ban đầu
